@@ -1,1 +1,200 @@
-gay
+add.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Expense - MMU BohLui</title>
+
+    <!-- CSS LINK -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- NAVIGATION BAR -->
+    <nav>
+        <a href="/">Home</a>
+        <a href="/add">Add Expense</a>
+        <a href="/list">View Expenses</a>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container">
+
+        <!-- PAGE TITLE -->
+        <header>
+            <h1>💸 Add New Expense</h1>
+            <p class="subtitle">
+                Record your spending information below
+            </p>
+        </header>
+
+        <!-- INFORMATION SECTION -->
+        <section class="feature-box">
+
+            <h3>📌 Expense Tracking</h3>
+
+            <p>
+                Use this form to save your daily expenses.
+                Keeping track of your spending helps you
+                manage your finances more effectively.
+            </p>
+
+        </section>
+
+        <!-- EXPENSE FORM -->
+        <section class="expense-form-section">
+
+            <form method="POST" action="/add">
+
+                <!-- AMOUNT -->
+                <div class="form-group">
+
+                    <label for="amount">
+                        Expense Amount (RM)
+                    </label>
+
+                    <input 
+                        type="number"
+                        id="amount"
+                        name="amount"
+                        placeholder="Enter expense amount"
+                        required
+                    >
+
+                </div>
+
+                <!-- CATEGORY -->
+                <div class="form-group">
+
+                    <label for="category">
+                        Expense Category
+                    </label>
+
+                    <select id="category" name="category">
+
+                        <option value="Food">
+                            Food
+                        </option>
+
+                        <option value="Transport">
+                            Transport
+                        </option>
+
+                        <option value="Entertainment">
+                            Entertainment
+                        </option>
+
+                        <option value="Bills">
+                            Bills
+                        </option>
+
+                        <option value="Shopping">
+                            Shopping
+                        </option>
+
+                        <option value="Others">
+                            Others
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- DESCRIPTION -->
+                <div class="form-group">
+
+                    <label for="description">
+                        Expense Description
+                    </label>
+
+                    <input
+                        type="text"
+                        id="description"
+                        name="description"
+                        placeholder="Example: Lunch at cafeteria"
+                    >
+
+                </div>
+
+                <!-- DATE -->
+                <div class="form-group">
+
+                    <label for="date">
+                        Expense Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="date"
+                        name="date"
+                    >
+
+                </div>
+
+                <!-- NOTES -->
+                <div class="form-group">
+
+                    <label for="notes">
+                        Additional Notes
+                    </label>
+
+                    <input
+                        type="text"
+                        id="notes"
+                        name="notes"
+                        placeholder="Optional notes"
+                    >
+
+                </div>
+
+                <!-- BUTTON SECTION -->
+                <div class="button-section">
+
+                    <button type="submit">
+                        Save Expense
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+        <!-- TIPS SECTION -->
+        <section class="feature-box">
+
+            <h3>💡 Tips</h3>
+
+            <ul>
+                <li>Track your expenses daily</li>
+                <li>Record accurate amounts</li>
+                <li>Review your spending regularly</li>
+                <li>Separate expenses by category</li>
+            </ul>
+
+        </section>
+
+        <!-- NAVIGATION -->
+        <section class="navigation-section">
+
+            <a href="/">
+                ← Return to Homepage
+            </a>
+
+        </section>
+
+    </div>
+
+    <footer>
+
+        <p>
+            MMU BohLui Expense Tracker System © 2026
+        </p>
+
+    </footer>
+
+</body>
+</html>
