@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for
+from database import create_table, insert_expense, get_expenses
 
 app = Flask(__name__)
-
-mock_database = []
+create_table()
 
 @app.route('/')
 def home():
@@ -15,7 +15,7 @@ def add_expense():
         category = request.form.get('category')
         description = request.form.get('description')
         
-        mock_database.append([amount, category, description])
+        insert_expense(amount, category, description)
         
         return redirect(url_for('list_expenses'))
     
@@ -23,11 +23,14 @@ def add_expense():
 
 @app.route('/list')
 def list_expenses():
+    db_data =get_expenses()
     total_amount = 0
-    for expense in mock_database:
-        total_amount += float(expense[0])
+    formatted_expenses=[]
+    for row in db_data:
+        total_amount += float(row[1])
+        formatted_expenses.append([row[1],row[2],row[3]])
         
-    return render_template('list.html', expenses=mock_database, total=total_amount)
+    return render_template('list.html', expenses=formatted_expenses, total=total_amount)
 
 if __name__ == '__main__':
     app.run(debug=True)
