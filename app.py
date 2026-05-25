@@ -32,5 +32,11 @@ def list_expenses():
         
     return render_template('list.html', expenses=formatted_expenses, total=total_amount)
 
+@app.route('/delete/<int:expense_id>')
+def delete(expense_id):
+    delete_expense(expense_id)
+    return redirect(url_for('list_expense'))
+    
+
 if __name__ == '__main__':
     app.run(debug=True)
