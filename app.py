@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-from database import create_table, insert_expense, get_expenses
+from database import create_table, insert_expense, get_expenses,delete_expense
 
 app = Flask(__name__)
 create_table()
@@ -32,7 +32,7 @@ def list_expenses():
         
     return render_template('list.html', expenses=formatted_expenses, total=total_amount)
 
-@app.route('/delete/<int:expense_id>')
+@app.route('/delete/<int:expense_id>',methods=['POST'])
 def delete(expense_id):
     delete_expense(expense_id)
     return redirect(url_for('list_expense'))
