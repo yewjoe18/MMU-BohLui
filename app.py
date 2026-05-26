@@ -28,14 +28,14 @@ def list_expenses():
     formatted_expenses=[]
     for row in db_data:
         total_amount += float(row[1])
-        formatted_expenses.append([row[1],row[2],row[3]])
+        formatted_expenses.append([row[0],row[1],row[2],row[3]])
         
     return render_template('list.html', expenses=formatted_expenses, total=total_amount)
 
 @app.route('/delete/<int:expense_id>',methods=['POST'])
 def delete(expense_id):
     delete_expense(expense_id)
-    return redirect(url_for('list_expense'))
+    return redirect(url_for('list_expenses'))
     
 
 if __name__ == '__main__':
