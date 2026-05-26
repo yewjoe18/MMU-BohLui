@@ -67,11 +67,10 @@ list.html
         </section>
 
         <!-- EXPENSE TABLE SECTION -->
-        <section class="table-section">
+    <section class="table-section">
 
             <table>
 
-                <!-- TABLE HEADER -->
                 <thead>
 
                     <tr>
@@ -79,11 +78,10 @@ list.html
                         <th>Amount (RM)</th>
                         <th>Category</th>
                         <th>Description</th>
-                    </tr>
+                        <th>Actions</th> </tr>
 
                 </thead>
 
-                <!-- TABLE BODY -->
                 <tbody>
 
                     {% for expense in expenses %}
@@ -95,15 +93,23 @@ list.html
                         </td>
 
                         <td>
-                            RM {{ expense[0] }}
-                        </td>
-
-                        <td>
-                            {{ expense[1] }}
+                            RM {{ expense[1] }}
                         </td>
 
                         <td>
                             {{ expense[2] }}
+                        </td>
+
+                        <td>
+                            {{ expense[3] }}
+                        </td>
+
+                        <td>
+                            <form action="{{ url_for('delete', expense_id=expense[0]) }}" method="POST" style="display:inline;">
+                                <button type="submit" style="background-color: #ef4444; padding: 6px 12px; width: auto; margin: 0; font-size: 13px;">
+                                    Delete
+                                </button>
+                            </form>
                         </td>
 
                     </tr>
