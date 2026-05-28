@@ -247,4 +247,8 @@ function confirmReset() {
             .innerHTML = "0 characters entered";
     }
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> bce4b8b088ca81f0225a2176dd482c5351a37883

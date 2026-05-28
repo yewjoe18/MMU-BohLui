@@ -5,12 +5,14 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    <title>MMU BohLui | Expense Tracker</title>
+    <title>MMU BohLui Dashboard</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 
@@ -34,6 +36,8 @@
 
             <a href="/list">Expense Records</a>
 
+            <a href="/logout">Logout</a>
+
         </div>
 
     </nav>
@@ -48,15 +52,14 @@
         <div class="hero-content">
 
             <h1>
-                Smart Expense Tracking
-                <br>
-                Made Simple
+                Welcome Back,
+                {{ student_name }} 👋
             </h1>
 
             <p>
-                MMU BohLui helps students track,
-                manage, and organize their daily expenses
-                efficiently with a modern and user-friendly system.
+                Track your expenses smarter and
+                manage your financial habits efficiently
+                using MMU BohLui.
             </p>
 
             <div class="hero-buttons">
@@ -85,14 +88,14 @@
 
 
     <!-- =========================
-         MAIN CONTAINER
+         MAIN CONTENT
     ========================== -->
 
     <div class="container">
 
 
         <!-- =========================
-             STATISTICS SECTION
+             DASHBOARD CARDS
         ========================== -->
 
         <section class="stats-section">
@@ -104,8 +107,8 @@
                 <h3>Expense Tracking</h3>
 
                 <p>
-                    Monitor daily spending activities
-                    efficiently and accurately.
+                    Keep track of all your daily
+                    spending activities easily.
                 </p>
 
             </div>
@@ -113,13 +116,13 @@
 
             <div class="stats-card">
 
-                <h2>📊</h2>
+                <h2>📈</h2>
 
-                <h3>Financial Overview</h3>
+                <h3>Financial Awareness</h3>
 
                 <p>
-                    View expense history and spending patterns
-                    in one organized system.
+                    Monitor spending habits and
+                    improve budgeting decisions.
                 </p>
 
             </div>
@@ -129,11 +132,11 @@
 
                 <h2>⚡</h2>
 
-                <h3>Easy To Use</h3>
+                <h3>Smart Management</h3>
 
                 <p>
-                    Simple interface designed for
-                    students and beginner users.
+                    Organize expenses with categories
+                    and detailed descriptions.
                 </p>
 
             </div>
@@ -148,19 +151,21 @@
         <section class="feature-box">
 
             <h2>
-                📌 About MMU BohLui
+                📌 About BohLui
             </h2>
 
             <p>
-                MMU BohLui is a web-based expense tracking application
-                developed as a Mini IT Project using Flask,
-                HTML, CSS, JavaScript, and SQLite database.
+                MMU BohLui is a student expense
+                tracking system developed using
+                Flask, HTML, CSS, JavaScript,
+                and SQLite database.
             </p>
 
             <p>
-                This project aims to help users improve
-                financial awareness and spending habits
-                through a clean and interactive system.
+                The purpose of this system is to
+                help students develop better
+                spending habits and improve
+                financial awareness.
             </p>
 
         </section>
@@ -173,18 +178,20 @@
         <section class="feature-box">
 
             <h2>
-                ✨ Key Features
+                ✨ System Features
             </h2>
 
             <div class="feature-list">
 
                 <div class="feature-item">
 
-                    <h3>✔ Add Expenses</h3>
+                    <h3>
+                        ✔ Add Expenses
+                    </h3>
 
                     <p>
-                        Record expenses quickly with categories
-                        and descriptions.
+                        Record daily expenses quickly
+                        with categories and descriptions.
                     </p>
 
                 </div>
@@ -192,11 +199,13 @@
 
                 <div class="feature-item">
 
-                    <h3>✔ Expense Records</h3>
+                    <h3>
+                        ✔ Expense Records
+                    </h3>
 
                     <p>
-                        View all spending history
-                        in a clean table layout.
+                        Review all spending history
+                        in one organized table.
                     </p>
 
                 </div>
@@ -204,11 +213,13 @@
 
                 <div class="feature-item">
 
-                    <h3>✔ Interactive UI</h3>
+                    <h3>
+                        ✔ Student Login
+                    </h3>
 
                     <p>
-                        Smooth user interface with JavaScript
-                        interaction and validation.
+                        Personalized dashboard system
+                        for each registered student.
                     </p>
 
                 </div>
@@ -219,31 +230,31 @@
 
 
         <!-- =========================
-             HOW TO USE
+             QUICK GUIDE
         ========================== -->
 
         <section class="feature-box">
 
             <h2>
-                📖 How To Use
+                📖 Quick User Guide
             </h2>
 
             <ol>
 
                 <li>
-                    Open the Add Expense page
+                    Login using your student details
                 </li>
 
                 <li>
-                    Enter your expense information
+                    Add your daily expenses
                 </li>
 
                 <li>
-                    Submit the expense form
+                    View and manage expense records
                 </li>
 
                 <li>
-                    Review your records in Expense Records
+                    Monitor your spending habits
                 </li>
 
             </ol>
@@ -252,7 +263,7 @@
 
 
         <!-- =========================
-             FINANCIAL TIPS
+             TIPS SECTION
         ========================== -->
 
         <section class="feature-box">
@@ -264,7 +275,7 @@
             <ul>
 
                 <li>
-                    Track your spending every day
+                    Track spending every day
                 </li>
 
                 <li>
@@ -276,7 +287,7 @@
                 </li>
 
                 <li>
-                    Set monthly savings goals
+                    Build monthly saving habits
                 </li>
 
             </ul>
