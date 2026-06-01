@@ -205,3 +205,30 @@ def delete(expense_id):
 if __name__ == '__main__':
 
     app.run(debug=True)
+
+
+# =========================
+# RUN CHART
+# =========================
+
+@app.route('/chart')
+def chart():
+
+    if 'student_name' not in session:
+        return redirect('/login')
+
+    expenses = get_expenses()
+
+    categories = []
+    amounts = []
+
+    for expense in expenses:
+
+        categories.append(expense[2])
+        amounts.append(expense[1])
+
+    return render_template(
+        'chart.html',
+        categories=categories,
+        amounts=amounts
+    )

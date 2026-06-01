@@ -159,3 +159,36 @@ def login_student(student_name, student_email):
     conn.close()
 
     return student
+
+
+
+
+# =========================
+# Store dates
+# =========================
+
+def insert_expense(amount, category, description, student_email, expense_date):
+
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        INSERT INTO expenses (
+            amount,
+            category,
+            description,
+            student_email,
+            expense_date
+        )
+        VALUES (?, ?, ?, ?, ?)
+    """,
+    (
+        amount,
+        category,
+        description,
+        student_email,
+        expense_date
+    ))
+
+    conn.commit()
+    conn.close()
