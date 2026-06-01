@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Student Register</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>📝 Student Registration</h1>
+
+        <form method="POST">
+
+            <label>Student Name</label>
+
+            <input type="text"
+                   name="student_name"
+                   required>
+
+            <label>Student Email</label>
+
+            <input type="email"
+                   name="student_email"
+                   required>
+
+            <button type="submit">
+                Register
+            </button>
+
+        </form>
+
+        <br>
+
+        <a href="/login">
+            Back To Login
+        </a>
+
+    </div>
+
+</body>
+
+</html>
