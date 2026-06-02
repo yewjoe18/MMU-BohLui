@@ -109,12 +109,16 @@ def add_expense():
 # =========================
 # VIEW EXPENSES
 # =========================
+# =========================
+# VIEW EXPENSES
+# =========================
 @app.route('/list')
 def list_expenses():
     if 'student_name' not in session:
         return redirect('/login')
 
-    db_data = get_expenses()
+    current_email = session.get('student_email')
+    db_data = get_expenses(current_email) 
     total_amount = 0
     formatted_expenses = []
 
@@ -131,12 +135,17 @@ def list_expenses():
 # =========================
 # CHART PAGE (提上来了！)
 # =========================
+# =========================
+# CHART PAGE
+# =========================
 @app.route('/chart')
 def chart():
     if 'student_name' not in session:
         return redirect('/login')
 
-    expenses = get_expenses()
+    current_email = session.get('student_email')
+    expenses = get_expenses(current_email)
+
     categories = []
     amounts = []
 

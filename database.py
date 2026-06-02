@@ -43,10 +43,15 @@ def insert_expense(amount, category, description, student_email, expense_date):
 # =========================
 # GET ALL EXPENSES
 # =========================
-def get_expenses():
+# =========================
+# GET EXPENSES (只拿当前登录用户的账单)
+# =========================
+def get_expenses(current_email):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM expenses")
+    
+    cursor.execute("SELECT * FROM expenses WHERE student_email = ?", (current_email,))
+    
     data = cursor.fetchall()
     conn.close()
     return data
