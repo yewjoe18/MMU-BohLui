@@ -46,7 +46,26 @@ add.html
 
         <!-- EXPENSE FORM -->
         <section class="expense-form-section">
+            
+<div class="feature-box">
+    <h3>⚡ Quick Add (One-Click)</h3>
+    <div class="quick-add-grid">
+        <button type="button" class="preset-btn" onclick="fillQuickAdd('Food', 'MMU Cafe Lunch', 8.50)">🍛 MMU Cafe Lunch</button>
+        <button type="button" class="preset-btn" onclick="fillQuickAdd('Transport', 'Bus KL-Raub', 15.00)">🚌 Bus KL-Raub</button>
+        <button type="button" class="preset-btn" onclick="fillQuickAdd('Entertainment', 'Express Supply Pass', 23.90)">🚂 Express Supply Pass</button>
+        <button type="button" class="preset-btn" onclick="fillQuickAdd('Entertainment', 'Sunway Lagoon App', 20.00)">🎢 Sunway Lagoon App</button>
+    </div>
+</div>
 
+<script>
+function fillQuickAdd(category, desc, amount) {
+    document.getElementById('category').value = category;
+    document.getElementById('description').value = desc;
+    document.getElementById('amount').value = amount;
+    // 如果你想让它一点就自动保存，把下面这行的斜杠 // 删掉
+    // document.querySelector('form').submit(); 
+}
+</script>
             <form method="POST" action="/add">
 
                 <!-- AMOUNT -->
