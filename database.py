@@ -2,9 +2,6 @@ import sqlite3
 
 DB_NAME = "expense.db"
 
-# =========================
-# CREATE EXPENSE TABLE (更新了！加上了 email 和 date)
-# =========================
 def create_table():
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
@@ -21,54 +18,35 @@ def create_table():
     conn.commit()
     conn.close()
 
-# =========================
-# INSERT EXPENSE (只留这一个最新版的)
-# =========================
 def insert_expense(amount, category, description, student_email, expense_date):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     cursor.execute("""
-        INSERT INTO expenses (
-            amount,
-            category,
-            description,
-            student_email,
-            expense_date
-        )
+        INSERT INTO expenses (amount, category, description, student_email, expense_date)
         VALUES (?, ?, ?, ?, ?)
     """, (amount, category, description, student_email, expense_date))
     conn.commit()
     conn.close()
 
-# =========================
-# GET ALL EXPENSES
-# =========================
-# =========================
-# GET EXPENSES (只拿当前登录用户的账单)
-# =========================
 def get_expenses(current_email):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
-    
     cursor.execute("SELECT * FROM expenses WHERE student_email = ?", (current_email,))
-    
     data = cursor.fetchall()
     conn.close()
     return data
 
-# =========================
-# DELETE EXPENSE
-# =========================
-def delete_expense(expense_id):
+# ✨ 新增：批量删除功能
+def delete_batch_expenses(expense_ids, current_email):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
-    cursor.execute("DELETE FROM expenses WHERE id = ?", (expense_id,))
+    placeholders = ','.join('?' for _ in expense_ids)
+    query = f"DELETE FROM expenses WHERE id IN ({placeholders}) AND student_email = ?"
+    params = tuple(expense_ids) + (current_email,)
+    cursor.execute(query, params)
     conn.commit()
     conn.close()
 
-# =========================
-# CREATE STUDENT TABLE
-# =========================
 def create_student_table():
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
@@ -76,38 +54,29 @@ def create_student_table():
         CREATE TABLE IF NOT EXISTS students (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             student_name TEXT,
-            student_email TEXT UNIQUE
+            student_email TEXT UNIQUE,
+            password_hash TEXT  /* ✨ 新增密码栏位 */
         )
     """)
     conn.commit()
     conn.close()
 
-# =========================
-# REGISTER STUDENT (修复了死锁问题)
-# =========================
-def register_student(student_name, student_email):
+def register_student(student_name, student_email, password_hash):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     try:
         cursor.execute("""
-            INSERT INTO students (student_name, student_email)
-            VALUES (?, ?)
-        """, (student_name, student_email))
+            INSERT INTO students (student_name, student_email, password_hash)
+            VALUES (?, ?, ?)
+        """, (student_name, student_email, password_hash))
         conn.commit()
     finally:
         conn.close()
 
-# =========================
-# LOGIN STUDENT
-# =========================
-def login_student(student_name, student_email):
+def get_student_by_email(student_email):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
-    cursor.execute("""
-        SELECT * FROM students
-        WHERE student_name = ?
-        AND student_email = ?
-    """, (student_name, student_email))
+    cursor.execute("SELECT * FROM students WHERE student_email = ?", (student_email,))
     student = cursor.fetchone()
     conn.close()
     return student
