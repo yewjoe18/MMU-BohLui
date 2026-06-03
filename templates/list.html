@@ -68,97 +68,35 @@ list.html
 
         <!-- EXPENSE TABLE SECTION -->
     <section class="table-section">
-
-            <table>
-
-                <thead>
-
-                    <tr>
-                        <th>No.</th>
-                        <th>Amount (RM)</th>
-                        <th>Category</th>
-                        <th>Description</th>
-                        <th>Actions</th> </tr>
-
-                </thead>
-
-                <tbody>
-
-                    {% for expense in expenses %}
-
-                    <tr>
-
-                        <td>
-                            {{ loop.index }}
-                        </td>
-
-                        <td>
-                            RM {{ expense[1] }}
-                        </td>
-
-                        <td>
-                            {{ expense[2] }}
-                        </td>
-
-                        <td>
-                            {{ expense[3] }}
-                        </td>
-
-                        <td>
-                            <form action="{{ url_for('delete', expense_id=expense[0]) }}" method="POST" style="display:inline;">
-                                <button type="submit" style="background-color: #ef4444; padding: 6px 12px; width: auto; margin: 0; font-size: 13px;">
-                                    Delete
-                                </button>
-                            </form>
-                        </td>
-
-                    </tr>
-
-                    {% endfor %}
-
-                </tbody>
-
-            </table>
-
-        </section>
-
-        <!-- INFORMATION SECTION -->
-        <section class="feature-box">
-
-            <h3>📖 Information</h3>
-
-            <ul>
-                <li>All expense records are displayed in the table above</li>
-                <li>Users can monitor their total spending amount</li>
-                <li>Expenses are grouped based on selected categories</li>
-                <li>This feature helps users manage their financial habits</li>
-            </ul>
-
-        </section>
-
-        <!-- ACTION BUTTONS -->
-        <section class="button-section">
-
-            <a href="/add">
-
-                <button>
-                    Add Another Expense
-                </button>
-
-            </a>
-
-        </section>
-
-        <!-- NAVIGATION -->
-        <section class="navigation-section">
-
-            <a href="/">
-                ← Return to Homepage
-            </a>
-
-        </section>
-
-    </div>
+    <form action="/delete_batch" method="POST">
+        <table>
+            <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>No.</th>
+                    <th>Amount (RM)</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for expense in expenses %}
+                <tr>
+                    <td><input type="checkbox" name="expense_ids" value="{{ expense[0] }}" style="width: 18px; height: 18px;"></td>
+                    <td>{{ loop.index }}</td>
+                    <td>RM {{ expense[1] }}</td>
+                    <td>{{ expense[2] }}</td>
+                    <td>{{ expense[3] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <button type="submit" class="secondary-btn" style="margin-top: 15px;">
+            🗑️ Delete Selected
+        </button>
+    </form>
+</section>
 
     <!-- FOOTER -->
     <footer>
