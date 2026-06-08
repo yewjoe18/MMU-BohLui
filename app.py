@@ -1,6 +1,6 @@
 from datetime import date, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from database import *
 
 app = Flask(__name__)
@@ -18,23 +18,33 @@ def home():
         return redirect('/login')
     return render_template('index.html', student_name=session['student_name'])
 
+# =========================
+# REGISTER PAGE
+# =========================
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         name = request.form.get('student_name')
         email = request.form.get('student_email')
-        password = request.form.get('password') # 获取前端密码
+        password = request.form.get('password')
         
-        # 将密码加密保护
         hashed_pwd = generate_password_hash(password)
         
         try:
             register_student(name, email, hashed_pwd)
+            # 注册成功，发送成功消息
+            flash("Account created successfully! Please login.", "success")
             return redirect('/login')
         except:
-            return "<h1>Email Already Registered!</h1><a href='/register'>Try a different email</a>"
+            # 注册失败（邮箱重复），发送错误消息，留在本页
+            flash("Email Already Registered! Please try a different one.", "error")
+            return redirect('/register')
+            
     return render_template('register.html')
 
+# =========================
+# LOGIN PAGE
+# =========================
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -43,14 +53,16 @@ def login():
 
         student = get_student_by_email(email)
         
-        # 验证密码是否正确
         if student and check_password_hash(student[3], password):
-            session.permanent = True  # 激活 30 天免登录
+            session.permanent = True
             session['student_name'] = student[1]
             session['student_email'] = student[2]
             return redirect('/')
         else:
-            return "<h1>Invalid Email or Password</h1><a href='/login'>Try Again</a>"
+            # 登录失败，发送错误消息，留在本页
+            flash("Invalid Email or Password. Please try again.", "error")
+            return redirect('/login')
+            
     return render_template('login.html')
 
 @app.route('/logout')
