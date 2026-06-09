@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>MMU BohLui Dashboard</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVIGATION BAR
+    ========================== -->
+
+    <nav>
+
+        <div class="logo">
+            💸 MMU BohLui
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/">Home</a>
+
+            <a href="/add">Add Expense</a>
+
+            <a href="/list">Expense Records</a>
+
+            <a href="/chart">Charts</a>
+
+            <a href="/logout">Logout</a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================
+         HERO SECTION
+    ========================== -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Welcome Back,
+                {{ student_name }} 👋
+            </h1>
+
+            <p>
+                Track your expenses smarter and
+                manage your financial habits efficiently
+                using MMU BohLui.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="/add">
+
+                    <button>
+                        ➕ Add Expense
+                    </button>
+
+                </a>
+
+                <a href="/list">
+
+                    <button class="secondary-btn">
+                        📊 View Records
+                    </button>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <div class="container">
+
+
+        <!-- =========================
+             DASHBOARD CARDS
+        ========================== -->
+
+        <section class="stats-section">
+
+            <div class="stats-card">
+
+                <h2>💰</h2>
+
+                <h3>Expense Tracking</h3>
+
+                <p>
+                    Keep track of all your daily
+                    spending activities easily.
+                </p>
+
+            </div>
+
+
+            <div class="stats-card">
+
+                <h2>📈</h2>
+
+                <h3>Financial Awareness</h3>
+
+                <p>
+                    Monitor spending habits and
+                    improve budgeting decisions.
+                </p>
+
+            </div>
+
+
+            <div class="stats-card">
+
+                <h2>⚡</h2>
+
+                <h3>Smart Management</h3>
+
+                <p>
+                    Organize expenses with categories
+                    and detailed descriptions.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             ABOUT SECTION
+        ========================== -->
+
+        <section class="feature-box">
+
+            <h2>
+                📌 About BohLui
+            </h2>
+
+            <p>
+                MMU BohLui is a student expense
+                tracking system developed using
+                Flask, HTML, CSS, JavaScript,
+                and SQLite database.
+            </p>
+
+            <p>
+                The purpose of this system is to
+                help students develop better
+                spending habits and improve
+                financial awareness.
+            </p>
+
+        </section>
+
+
+        <!-- =========================
+             FEATURES SECTION
+        ========================== -->
+
+        <section class="feature-box">
+
+            <h2>
+                ✨ System Features
+            </h2>
+
+            <div class="feature-list">
+
+                <div class="feature-item">
+
+                    <h3>
+                        ✔ Add Expenses
+                    </h3>
+
+                    <p>
+                        Record daily expenses quickly
+                        with categories and descriptions.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <h3>
+                        ✔ Expense Records
+                    </h3>
+
+                    <p>
+                        Review all spending history
+                        in one organized table.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-item">
+
+                    <h3>
+                        ✔ Student Login
+                    </h3>
+
+                    <p>
+                        Personalized dashboard system
+                        for each registered student.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             QUICK GUIDE
+        ========================== -->
+
+        <section class="feature-box">
+
+            <h2>
+                📖 Quick User Guide
+            </h2>
+
+            <ol>
+
+                <li>
+                    Login using your student details
+                </li>
+
+                <li>
+                    Add your daily expenses
+                </li>
+
+                <li>
+                    View and manage expense records
+                </li>
+
+                <li>
+                    Monitor your spending habits
+                </li>
+
+            </ol>
+
+        </section>
+
+
+        <!-- =========================
+             TIPS SECTION
+        ========================== -->
+
+        <section class="feature-box">
+
+            <h2>
+                💡 Financial Tips
+            </h2>
+
+            <ul>
+
+                <li>
+                    Track spending every day
+                </li>
+
+                <li>
+                    Avoid unnecessary purchases
+                </li>
+
+                <li>
+                    Separate needs from wants
+                </li>
+
+                <li>
+                    Build monthly saving habits
+                </li>
+
+            </ul>
+
+        </section>
+
+
+    </div>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <p>
+            MMU BohLui Expense Tracker System © 2026
+        </p>
+
+    </footer>
+
+</body>
+
+</html>
