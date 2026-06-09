@@ -2,193 +2,81 @@ import sqlite3
 
 DB_NAME = "expense.db"
 
-
-# =========================
-# CREATE EXPENSE TABLE
-# =========================
 def create_table():
-
     conn = sqlite3.connect(DB_NAME)
-
     cursor = conn.cursor()
-
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS expenses (
-
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-
             amount REAL,
-
             category TEXT,
-
-            description TEXT
+            description TEXT,
+            student_email TEXT,
+            expense_date TEXT
         )
     """)
-
     conn.commit()
-
     conn.close()
-
-
-# =========================
-# INSERT EXPENSE
-# =========================
-def insert_expense(amount, category, description):
-
-    conn = sqlite3.connect(DB_NAME)
-
-    cursor = conn.cursor()
-
-    cursor.execute("""
-        INSERT INTO expenses (
-            amount,
-            category,
-            description
-        )
-        VALUES (?, ?, ?)
-    """, (amount, category, description))
-
-    conn.commit()
-
-    conn.close()
-
-
-# =========================
-# GET ALL EXPENSES
-# =========================
-def get_expenses():
-
-    conn = sqlite3.connect(DB_NAME)
-
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM expenses")
-
-    data = cursor.fetchall()
-
-    conn.close()
-
-    return data
-
-
-# =========================
-# DELETE EXPENSE
-# =========================
-def delete_expense(expense_id):
-
-    conn = sqlite3.connect(DB_NAME)
-
-    cursor = conn.cursor()
-
-    cursor.execute(
-        "DELETE FROM expenses WHERE id = ?",
-        (expense_id,)
-    )
-
-    conn.commit()
-
-    conn.close()
-
-
-# =========================
-# CREATE STUDENT TABLE
-# =========================
-def create_student_table():
-
-    conn = sqlite3.connect(DB_NAME)
-
-    cursor = conn.cursor()
-
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS students (
-
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-
-            student_name TEXT,
-
-            student_email TEXT UNIQUE
-        )
-    """)
-
-    conn.commit()
-
-    conn.close()
-
-
-# =========================
-# REGISTER STUDENT
-# =========================
-def register_student(student_name, student_email):
-
-    conn = sqlite3.connect(DB_NAME)
-
-    cursor = conn.cursor()
-
-    cursor.execute("""
-        INSERT INTO students (
-            student_name,
-            student_email
-        )
-        VALUES (?, ?)
-    """, (student_name, student_email))
-
-    conn.commit()
-
-    conn.close()
-
-
-# =========================
-# LOGIN STUDENT
-# =========================
-def login_student(student_name, student_email):
-
-    conn = sqlite3.connect(DB_NAME)
-
-    cursor = conn.cursor()
-
-    cursor.execute("""
-        SELECT * FROM students
-
-        WHERE student_name = ?
-
-        AND student_email = ?
-    """, (student_name, student_email))
-
-    student = cursor.fetchone()
-
-    conn.close()
-
-    return student
-
-
-
-
-# =========================
-# Store dates
-# =========================
 
 def insert_expense(amount, category, description, student_email, expense_date):
-
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
-
     cursor.execute("""
-        INSERT INTO expenses (
-            amount,
-            category,
-            description,
-            student_email,
-            expense_date
-        )
+        INSERT INTO expenses (amount, category, description, student_email, expense_date)
         VALUES (?, ?, ?, ?, ?)
-    """,
-    (
-        amount,
-        category,
-        description,
-        student_email,
-        expense_date
-    ))
-
+    """, (amount, category, description, student_email, expense_date))
     conn.commit()
     conn.close()
+
+def get_expenses(current_email):
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM expenses WHERE student_email = ?", (current_email,))
+    data = cursor.fetchall()
+    conn.close()
+    return data
+
+# ✨ 新增：批量删除功能
+def delete_batch_expenses(expense_ids, current_email):
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+    placeholders = ','.join('?' for _ in expense_ids)
+    query = f"DELETE FROM expenses WHERE id IN ({placeholders}) AND student_email = ?"
+    params = tuple(expense_ids) + (current_email,)
+    cursor.execute(query, params)
+    conn.commit()
+    conn.close()
+
+def create_student_table():
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS students (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            student_name TEXT,
+            student_email TEXT UNIQUE,
+            password_hash TEXT  /* ✨ 新增密码栏位 */
+        )
+    """)
+    conn.commit()
+    conn.close()
+
+def register_student(student_name, student_email, password_hash):
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+    try:
+        cursor.execute("""
+            INSERT INTO students (student_name, student_email, password_hash)
+            VALUES (?, ?, ?)
+        """, (student_name, student_email, password_hash))
+        conn.commit()
+    finally:
+        conn.close()
+
+def get_student_by_email(student_email):
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM students WHERE student_email = ?", (student_email,))
+    student = cursor.fetchone()
+    conn.close()
+    return student

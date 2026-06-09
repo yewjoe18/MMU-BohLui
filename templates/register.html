@@ -1,49 +1,44 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-
-    <title>Student Register</title>
-
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
-
+    <meta charset="UTF-8">
+    <title>Student Register - MMU BohLui</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 <body>
-
     <div class="container">
+        <h1 style="text-align: center;">📝 Student Registration</h1>
+        <p class="subtitle" style="text-align: center;">Create your MMU BohLui account</p>
 
-        <h1>📝 Student Registration</h1>
+        <div class="feature-box">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div style="padding: 10px; margin-bottom: 15px; border-radius: 8px; text-align: center; font-weight: bold;
+                        {% if category == 'error' %} background-color: #fee2e2; color: #ef4444; border: 1px solid #fca5a5;
+                        {% else %} background-color: #dcfce3; color: #22c55e; border: 1px solid #86efac; {% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+            <form method="POST">
+                <label>Student Name</label>
+                <input type="text" name="student_name" placeholder="E.g. Chan Yee Seng" required>
 
-        <form method="POST">
+                <label>Student Email</label>
+                <input type="email" name="student_email" placeholder="E.g. student@mmu.edu.my" required>
 
-            <label>Student Name</label>
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Create a secure password" required>
 
-            <input type="text"
-                   name="student_name"
-                   required>
+                <button type="submit">Register</button>
+            </form>
+        </div>
 
-            <label>Student Email</label>
-
-            <input type="email"
-                   name="student_email"
-                   required>
-
-            <button type="submit">
-                Register
-            </button>
-
-        </form>
-
-        <br>
-
-        <a href="/login">
-            Back To Login
-        </a>
-
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="/login" style="color: #38bdf8; text-decoration: none; font-weight: bold;">← Back To Login</a>
+        </div>
     </div>
-
 </body>
-
 </html>

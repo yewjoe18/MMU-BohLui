@@ -1,49 +1,41 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-
-    <title>Student Login</title>
-
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
-
+    <meta charset="UTF-8">
+    <title>Student Login - MMU BohLui</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 <body>
-
     <div class="container">
+        <h1 style="text-align: center;">🎓 Student Login</h1>
+        <p class="subtitle" style="text-align: center;">Welcome back to MMU BohLui</p>
 
-        <h1>🎓 Student Login</h1>
+        <div class="feature-box">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div style="padding: 10px; margin-bottom: 15px; border-radius: 8px; text-align: center; font-weight: bold;
+                        {% if category == 'error' %} background-color: #fee2e2; color: #ef4444; border: 1px solid #fca5a5;
+                        {% else %} background-color: #dcfce3; color: #22c55e; border: 1px solid #86efac; {% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+            <form method="POST">
+                <label>Student Email</label>
+                <input type="email" name="student_email" placeholder="Enter your email" required>
 
-        <form method="POST">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Enter your password" required>
 
-            <label>Student Name</label>
+                <button type="submit">Login</button>
+            </form>
+        </div>
 
-            <input type="text"
-                   name="student_name"
-                   required>
-
-            <label>Student Email</label>
-
-            <input type="email"
-                   name="student_email"
-                   required>
-
-            <button type="submit">
-                Login
-            </button>
-
-        </form>
-
-        <br>
-
-        <a href="/register">
-            Create Account
-        </a>
-
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="/register" style="color: #38bdf8; text-decoration: none; font-weight: bold;">Create an Account</a>
+        </div>
     </div>
-
 </body>
-
 </html>
