@@ -1,317 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>MMU BohLui Dashboard</title>
-
-    <!-- CSS -->
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MMU-BohLui | Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
+<body onload="updateSummary()">
 
-<body>
+    <div class="app-container">
 
-    <!-- =========================
-         NAVIGATION BAR
-    ========================== -->
-
-    <nav>
-
-        <div class="logo">
-            💸 MMU BohLui
-        </div>
-
-        <div class="nav-links">
-
-            <a href="/">Home</a>
-
-            <a href="/add">Add Expense</a>
-
-            <a href="/list">Expense Records</a>
-
-            <a href="/chart">Charts</a>
-
-            <a href="/logout">Logout</a>
-
-        </div>
-
-    </nav>
-
-
-    <!-- =========================
-         HERO SECTION
-    ========================== -->
-
-    <section class="hero">
-
-        <div class="hero-content">
-
-            <h1>
-                Welcome Back,
-                {{ student_name }} 👋
-            </h1>
-
-            <p>
-                Track your expenses smarter and
-                manage your financial habits efficiently
-                using MMU BohLui.
-            </p>
-
-            <div class="hero-buttons">
-
-                <a href="/add">
-
-                    <button>
-                        ➕ Add Expense
-                    </button>
-
-                </a>
-
-                <a href="/list">
-
-                    <button class="secondary-btn">
-                        📊 View Records
-                    </button>
-
-                </a>
-
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-coins fa-2x logo-icon"></i>
+                <h1>MMU-BohLui</h1>
             </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         MAIN CONTENT
-    ========================== -->
-
-    <div class="container">
-
-
-        <!-- =========================
-             DASHBOARD CARDS
-        ========================== -->
-
-        <section class="stats-section">
-
-            <div class="stats-card">
-
-                <h2>💰</h2>
-
-                <h3>Expense Tracking</h3>
-
-                <p>
-                    Keep track of all your daily
-                    spending activities easily.
-                </p>
-
-            </div>
-
-
-            <div class="stats-card">
-
-                <h2>📈</h2>
-
-                <h3>Financial Awareness</h3>
-
-                <p>
-                    Monitor spending habits and
-                    improve budgeting decisions.
-                </p>
-
-            </div>
-
-
-            <div class="stats-card">
-
-                <h2>⚡</h2>
-
-                <h3>Smart Management</h3>
-
-                <p>
-                    Organize expenses with categories
-                    and detailed descriptions.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             ABOUT SECTION
-        ========================== -->
-
-        <section class="feature-box">
-
-            <h2>
-                📌 About BohLui
-            </h2>
-
-            <p>
-                MMU BohLui is a student expense
-                tracking system developed using
-                Flask, HTML, CSS, JavaScript,
-                and SQLite database.
-            </p>
-
-            <p>
-                The purpose of this system is to
-                help students develop better
-                spending habits and improve
-                financial awareness.
-            </p>
-
-        </section>
-
-
-        <!-- =========================
-             FEATURES SECTION
-        ========================== -->
-
-        <section class="feature-box">
-
-            <h2>
-                ✨ System Features
-            </h2>
-
-            <div class="feature-list">
-
-                <div class="feature-item">
-
-                    <h3>
-                        ✔ Add Expenses
-                    </h3>
-
-                    <p>
-                        Record daily expenses quickly
-                        with categories and descriptions.
-                    </p>
-
-                </div>
-
-
-                <div class="feature-item">
-
-                    <h3>
-                        ✔ Expense Records
-                    </h3>
-
-                    <p>
-                        Review all spending history
-                        in one organized table.
-                    </p>
-
-                </div>
-
-
-                <div class="feature-item">
-
-                    <h3>
-                        ✔ Student Login
-                    </h3>
-
-                    <p>
-                        Personalized dashboard system
-                        for each registered student.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             QUICK GUIDE
-        ========================== -->
-
-        <section class="feature-box">
-
-            <h2>
-                📖 Quick User Guide
-            </h2>
-
-            <ol>
-
-                <li>
-                    Login using your student details
-                </li>
-
-                <li>
-                    Add your daily expenses
-                </li>
-
-                <li>
-                    View and manage expense records
-                </li>
-
-                <li>
-                    Monitor your spending habits
-                </li>
-
-            </ol>
-
-        </section>
-
-
-        <!-- =========================
-             TIPS SECTION
-        ========================== -->
-
-        <section class="feature-box">
-
-            <h2>
-                💡 Financial Tips
-            </h2>
-
-            <ul>
-
-                <li>
-                    Track spending every day
-                </li>
-
-                <li>
-                    Avoid unnecessary purchases
-                </li>
-
-                <li>
-                    Separate needs from wants
-                </li>
-
-                <li>
-                    Build monthly saving habits
-                </li>
-
+            
+            <div class="user-profile">
+                <img src="path/to/placeholder_user_profile.png" alt="Profile" class="profile-pic">
+                <p id="current_user">Hi, Admin!</p> </div>
+
+            <ul class="nav-links">
+                <li class="active"><a href="index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="add.html"><i class="fas fa-plus-circle"></i> Add Income</a></li>
+                <li><a href="add.html"><i class="fas fa-minus-circle"></i> Add Expense</a></li>
+                <li><a href="list.html"><i class="fas fa-list-ul"></i> View List</a></li>
+                <li><a href="chart.html"><i class="fas fa-chart-pie"></i> Spending Chart</a></li>
+                <li><a href="login.html"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
             </ul>
 
-        </section>
+            <div class="sidebar-footer">
+                <p>&copy; 2024</p>
+            </div>
+        </nav>
 
+        <main class="main-content">
+            <header class="top-header">
+                <h2>Welcome back!</h2>
+                <div class="header-actions">
+                    <button class="icon-btn"><i class="fas fa-bell"></i></button>
+                    <button class="icon-btn"><i class="fas fa-envelope"></i></button>
+                </div>
+            </header>
+
+            <div class="dashboard-grid">
+
+                <div class="dashboard-widget summary-widget" id="total-income">
+                    <h3><i class="fas fa-arrow-circle-up icon-green"></i> Total Income</h3>
+                    <p class="balance-display">$<span id="income">0.00</span></p>
+                </div>
+                <div class="dashboard-widget summary-widget" id="total-expense">
+                    <h3><i class="fas fa-arrow-circle-down icon-red"></i> Total Expense</h3>
+                    <p class="balance-display">$<span id="expense">0.00</span></p>
+                </div>
+                <div class="dashboard-widget summary-widget" id="total-balance">
+                    <h3><i class="fas fa-wallet icon-blue"></i> Total Balance</h3>
+                    <p class="balance-display balance-highlight">$<span id="balance">0.00</span></p>
+                </div>
+
+                <div class="dashboard-widget chart-widget wide-widget">
+                    <h3>Spending Breakdown</h3>
+                    <div style="height: 200px; background-color: rgba(255, 255, 255, 0.05); display: grid; place-items: center; border-radius: 8px;">
+                        [Spending breakdown chart here]
+                    </div>
+                    <p>Go to <a href="chart.html">Spending Chart</a> page for detailed view.</p>
+                </div>
+
+                <div class="dashboard-widget wide-widget" id="recent-transactions">
+                    <h3><i class="fas fa-history"></i> Recent Transactions</h3>
+                    <div class="transaction-list-container">
+                        <ul id="tList">
+                            </ul>
+                    </div>
+                </div>
+
+                </div> <footer class="main-footer">
+                <p>Multimedia University • MMU-BohLui Project</p>
+            </footer>
+        </main>
 
     </div>
 
-
-    <!-- =========================
-         FOOTER
-    ========================== -->
-
-    <footer>
-
-        <p>
-            MMU BohLui Expense Tracker System © 2026
-        </p>
-
-    </footer>
-
+    <script src="script.js"></script>
 </body>
-
 </html>
