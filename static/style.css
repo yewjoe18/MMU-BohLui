@@ -127,7 +127,7 @@ body.dark-mode th { background: #0f172a; color: #cbd5e1; }
 body.dark-mode td { border-bottom: 1px solid #334155; }
 body.dark-mode tr:hover { background: #334155; }
 
-/* 切换按钮自己的专属样式，让它看起来不像普通的提交按钮 */
+/* */
 .theme-toggle-btn {
     width: auto; margin-top: 0; padding: 8px 15px; font-size: 14px;
     background: transparent; border: 1px solid #cbd5e1; color: #475569;
