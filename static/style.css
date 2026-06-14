@@ -1,109 +1,357 @@
-/* =========================
-   RESET & BODY 
-========================= */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* style.css - MMU-BohLui Project - Modern Dark Dashboard */
+
+:root {
+    /* Color Palette */
+    --bg-color: #101015; /* Main application background */
+    --bg-darker: #0d0d12;
+    --sidebar-bg: rgba(20, 20, 30, 0.95);
+    --card-bg: rgba(30, 30, 45, 0.9);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --text-primary: #f5f5f7;
+    --text-secondary: #a1a1aa;
+    --accent-blue: #00e5ff; /* active links */
+    --accent-green: #34d399; /*income */
+    --accent-red: #f87171; /*expense */
+    --glow-color: rgba(0, 229, 255, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', 'Roboto', 'Segoe UI', system-ui, sans-serif;
+}
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #e0f2fe 0%, #fce7f3 100%);
+    background-color: var(--bg-color);
+    background-image: 
+        radial-gradient(circle at 50% -20%, var(--glow-color) 0%, transparent 40%),
+        radial-gradient(circle at 10% 70%, rgba(200, 200, 250, 0.05) 0%, transparent 20%),
+        /* A complex polygonal pattern - use a suitable image or SVG if available */
+        url('path/to/geometric_pattern_background.svg'); /* Need an SVG pattern or similar image */
+    background-size: cover;
+    background-position: center;
     background-attachment: fixed;
-    color: #475569;
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
 }
 
-/* =========================
-   NAVBAR 
-========================= */
-nav {
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(15px);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
-    padding: 15px;
-    text-align: center;
-    border-bottom: 1px solid rgba(255,255,255,0.4);
-    position: sticky; top: 0; z-index: 100;
-}
-nav .logo { color: #38bdf8; font-weight: bold; font-size: 20px; }
-nav a { color: #64748b; font-weight: 600; text-decoration: none; margin: 0 15px; transition: 0.3s; }
-nav a:hover { color: #f472b6; }
+/* Helper classes for icons */
+.icon-green { color: var(--accent-green); }
+.icon-red { color: var(--accent-red); }
+.icon-blue { color: var(--accent-blue); }
 
-/* =========================
-   CONTAINERS & CARDS 
-========================= */
-.container {
-    width: 90%; max-width: 750px; margin: 40px auto;
-    background: rgba(255, 255, 255, 0.85);
+/* --- Layout Structure --- */
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* --- Sidebar Styling --- */
+.sidebar {
+    width: 250px;
+    background-color: var(--sidebar-bg);
+    border-right: 1px solid var(--card-border);
     backdrop-filter: blur(10px);
-    padding: 35px;
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-    border: 1px solid rgba(255,255,255,0.6);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    color: var(--text-secondary);
 }
 
-.stats-card, .feature-box, .expense-form-section {
-    background: white; border-radius: 15px; padding: 20px; margin-top: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid #f8fafc;
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
 
-/* ✨ BUTTON FEATURES！ */
-.stats-card:hover, .feature-box:hover {
-    transform: translateY(-6px); 
-    box-shadow: 0 12px 25px rgba(244, 114, 182, 0.15); 
+.sidebar-header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
 }
 
-/* =========================
-   BUTTONS 
-========================= */
-button {
-    background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%); /* 蓝紫渐变 */
-    color: white; border: none; padding: 12px 20px; border-radius: 12px;
-    font-size: 15px; font-weight: bold; cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
-    width: 100%; margin-top: 10px;
-}
-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(56, 189, 248, 0.6);
-}
-.secondary-btn {
-    background: linear-gradient(135deg, #f472b6 0%, #fb7185 100%); /* 猛男粉渐变 */
-    box-shadow: 0 4px 15px rgba(244, 114, 182, 0.4);
-}
-.secondary-btn:hover { box-shadow: 0 6px 20px rgba(244, 114, 182, 0.6); }
-
-/* =========================
-   INPUTS
-========================= */
-input, select {
-    width: 100%; padding: 12px; margin-top: 8px; margin-bottom: 15px;
-    border: 2px solid #e2e8f0; border-radius: 12px;
-    background: #f8fafc; transition: 0.3s; outline: none;
-}
-input:focus, select:focus {
-    border-color: #f472b6; background: white;
-    box-shadow: 0 0 0 4px rgba(244, 114, 182, 0.1);
+.logo-icon {
+    color: var(--accent-blue);
 }
 
-/* =========================
-   QUICK ADD GRID 
-========================= */
-.quick-add-grid {
-    display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px;
-}
-.preset-btn {
-    background: white; color: #475569; border: 2px dashed #cbd5e1;
-    box-shadow: none; padding: 10px; font-size: 14px;
-}
-.preset-btn:hover {
-    border-color: #38bdf8; color: #38bdf8; background: #f0f9ff; transform: scale(1.02);
+.user-profile {
+    text-align: center;
+    margin-bottom: 2rem;
 }
 
-/* =========================
-   TABLE
-========================= */
-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; border-radius: 12px; overflow: hidden; }
-th { background: #f8fafc; color: #475569; font-weight: 600; padding: 15px; text-align: left; }
-td { padding: 15px; border-bottom: 1px solid #f1f5f9; }
-tr:hover { background: #fdfbfb; }
+.profile-pic {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 0.5rem;
+    background-color: var(--bg-darker);
+    border: 2px solid var(--accent-blue);
+}
+
+.user-profile p {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.nav-links li {
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.nav-links li:hover {
+    background-color: var(--bg-darker);
+    color: var(--text-primary);
+}
+
+.nav-links li.active {
+    background-color: rgba(0, 229, 255, 0.1);
+    color: var(--accent-blue);
+    font-weight: 600;
+}
+
+.nav-links li.active a i {
+    color: var(--accent-blue);
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1rem;
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+/* --- Main Content Styling --- */
+.main-content {
+    flex: 1;
+    padding: 2rem;
+}
+
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.top-header h2 {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.header-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.icon-btn:hover {
+    color: var(--text-primary);
+}
+
+/* --- Dashboard Grid Styling --- */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 2rem;
+}
+
+.dashboard-widget {
+    background-color: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--card-border);
+    transition: transform 0.2s;
+}
+
+.dashboard-widget:hover {
+    transform: translateY(-5px);
+}
+
+.dashboard-widget h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.wide-widget {
+    grid-column: span 3;
+}
+
+.balance-display {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.balance-highlight {
+    color: var(--accent-blue);
+}
+
+/* --- Recent Transactions Section --- */
+.transaction-list-container {
+    max-height: 250px;
+    overflow-y: auto;
+    padding: 0.5rem;
+    margin-top: 1rem;
+}
+
+ul#tList {
+    list-style: none;
+}
+
+ul#tList li {
+    background-color: var(--bg-darker);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Re-using the structure from script.js, but styled for the new list */
+ul#tList li h4 {
+    color: var(--text-primary);
+}
+
+ul#tList li span#date {
+    color: var(--text-secondary);
+}
+
+ul#tList li h3#amount {
+    font-weight: 700;
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    font-size: 1.2rem;
+}
+
+ul#tList li p#type {
+    text-transform: capitalize;
+    color: var(--text-secondary);
+}
+
+/* --- Original Card Structure (used on other pages) --- */
+#original-card {
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--card-border);
+    width: 100%;
+    max-width: 800px;
+    margin: 2rem auto;
+}
+
+/* --- General Content Styling (preserved from old CSS) --- */
+#original-card h2, #original-card h3 {
+    margin-bottom: 1rem;
+}
+
+#original-card h3 span {
+    font-weight: normal;
+    color: #666;
+    margin-left: 0.5rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+}
+
+th, td {
+    border-bottom: 1px solid var(--card-border);
+    padding: 1rem;
+    text-align: left;
+}
+
+th {
+    background-color: var(--bg-darker);
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+td {
+    color: var(--text-secondary);
+}
+
+button, input[type=submit] {
+    background-color: var(--accent-blue);
+    color: #000;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+button:hover, input[type=submit]:hover {
+    background-color: #00b8d4;
+    box-shadow: 0 0 10px var(--glow-color);
+}
+
+/* Re-use the existing colors, but adjusted */
+.income {
+    color: var(--accent-green);
+}
+
+.expense {
+    color: var(--accent-red);
+}
+
+#total_balance {
+    color: var(--accent-blue);
+}
+
+/* Footers on original pages */
+footer#original-footer {
+    text-align: center;
+    margin: 2rem 0;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* A main footer for the new layout */
+.main-footer {
+    margin-top: 2rem;
+    text-align: center;
+    padding: 1rem;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--card-border);
+}
+
+/* Placeholder for your actual chart page element */
+#spending-chart-box {
+    margin-top: 2rem;
+}
