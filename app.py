@@ -31,11 +31,19 @@ def register():
         
         try:
             register_student(name, email, hashed_pwd)
+<<<<<<< HEAD
+            # register successful
+            flash("Account created successfully! Please login.", "success")
+            return redirect('/login')
+        except:
+            # register unsuccessful
+=======
             # 注册成功，发送成功消息
             flash("Account created successfully! Please login.", "success")
             return redirect('/login')
         except:
             # 注册失败（邮箱重复），发送错误消息，留在本页
+>>>>>>> 956bb04f2a114a18e4712e70b44b95f999b758dc
             flash("Email Already Registered! Please try a different one.", "error")
             return redirect('/register')
             
@@ -58,7 +66,11 @@ def login():
             session['student_email'] = student[2]
             return redirect('/')
         else:
+<<<<<<< HEAD
+            # login fail
+=======
             # 登录失败，发送错误消息，留在本页
+>>>>>>> 956bb04f2a114a18e4712e70b44b95f999b758dc
             flash("Invalid Email or Password. Please try again.", "error")
             return redirect('/login')
             
@@ -87,6 +99,11 @@ def add_expense():
 
     return render_template('add.html')
 
+<<<<<<< HEAD
+from datetime import datetime 
+
+=======
+>>>>>>> 956bb04f2a114a18e4712e70b44b95f999b758dc
 @app.route('/list')
 def list_expenses():
     if 'student_name' not in session:
@@ -94,6 +111,40 @@ def list_expenses():
 
     current_email = session.get('student_email')
     db_data = get_expenses(current_email)
+<<<<<<< HEAD
+    
+    
+    total_amount = 0
+    daily_total = 0
+    monthly_total = 0
+    formatted_expenses = []
+
+    today_str = datetime.now().strftime("%Y-%m-%d")  # 比如 '2026-06-16'
+    current_month_str = datetime.now().strftime("%Y-%m") # 比如 '2026-06'
+
+    for row in db_data:
+        amt = float(row[1])
+        date_str = row[5] # 数据库里的 expense_date 是第 6 个栏位 (索引为 5)
+
+        total_amount += amt
+        
+        # 判断是不是今天的消费
+        if date_str == today_str:
+            daily_total += amt
+            
+        # 判断是不是这个月的消费
+        if date_str and date_str.startswith(current_month_str):
+            monthly_total += amt
+
+        # ✨ UPDATE: 把日期 (row[5]) 也加进列表里传给前端
+        formatted_expenses.append([row[0], row[1], row[2], row[3], row[5]])
+
+    return render_template('list.html', 
+                           expenses=formatted_expenses, 
+                           total=total_amount,
+                           daily_total=daily_total,      # 传给前端
+                           monthly_total=monthly_total)  # 传给前端
+=======
     total_amount = 0
     formatted_expenses = []
 
@@ -102,6 +153,7 @@ def list_expenses():
         formatted_expenses.append([row[0], row[1], row[2], row[3]])
 
     return render_template('list.html', expenses=formatted_expenses, total=total_amount)
+>>>>>>> 956bb04f2a114a18e4712e70b44b95f999b758dc
 
 @app.route('/chart')
 def chart():
