@@ -36,6 +36,7 @@ def get_expenses(current_email):
     conn.close()
     return data
 
+
 def delete_batch_expenses(expense_ids, current_email):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
