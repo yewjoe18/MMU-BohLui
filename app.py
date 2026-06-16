@@ -6,7 +6,6 @@ from database import *
 app = Flask(__name__)
 app.secret_key = "bohlui_secret_key"
 
-# ✨ 让用户保持登录状态 30 天，不需要一直填密码
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=30) 
 
 create_table()
@@ -120,7 +119,7 @@ def chart():
 
     return render_template('chart.html', categories=categories, amounts=amounts)
 
-# ✨ 新增：批量删除路由
+
 @app.route('/delete_batch', methods=['POST'])
 def delete_batch():
     if 'student_name' not in session:
