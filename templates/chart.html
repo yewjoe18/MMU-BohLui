@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Expense Analytics</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>📊 Expense Analytics Dashboard</h1>
+
+        <p>
+            Visualize your spending habits.
+        </p>
+
+        <canvas id="expenseChart"></canvas>
+
+        <br>
+
+        <a href="/">
+            <button>🏠 Back Home</button>
+        </a>
+
+    </div>
+
+
+    <script>
+
+        const categories =
+            {{ categories|tojson }};
+
+        const amounts =
+            {{ amounts|tojson }};
+
+        const ctx =
+            document.getElementById(
+                'expenseChart'
+            );
+
+        new Chart(ctx, {
+
+            type: 'bar',
+
+            data: {
+
+                labels: categories,
+
+                datasets: [
+
+                    {
+
+                        label: 'Expense Amount (RM)',
+
+                        data: amounts,
+
+                        borderWidth: 1
+
+                    }
+
+                ]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                scales: {
+
+                    y: {
+
+                        beginAtZero: true
+
+                    }
+
+                }
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
