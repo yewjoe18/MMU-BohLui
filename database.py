@@ -55,7 +55,11 @@ def create_student_table():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             student_name TEXT,
             student_email TEXT UNIQUE,
+<<<<<<< HEAD
             password_hash TEXT 
+=======
+            password_hash TEXT  /* ✨ 新增密码栏位 */
+>>>>>>> 956bb04f2a114a18e4712e70b44b95f999b758dc
         )
     """)
     conn.commit()
