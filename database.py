@@ -36,7 +36,6 @@ def get_expenses(current_email):
     conn.close()
     return data
 
-
 def delete_batch_expenses(expense_ids, current_email):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
@@ -47,6 +46,7 @@ def delete_batch_expenses(expense_ids, current_email):
     conn.commit()
     conn.close()
 
+# ✨ UPDATE: 这里是带有 monthly_budget 的新图纸！
 def create_student_table():
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
@@ -55,9 +55,14 @@ def create_student_table():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             student_name TEXT,
             student_email TEXT UNIQUE,
-            password_hash TEXT 
+            password_hash TEXT,
+            monthly_budget REAL DEFAULT 500.0
         )
     """)
+    try:
+        cursor.execute("ALTER TABLE students ADD COLUMN monthly_budget REAL DEFAULT 500.0")
+    except:
+        pass
     conn.commit()
     conn.close()
 
@@ -80,3 +85,11 @@ def get_student_by_email(student_email):
     student = cursor.fetchone()
     conn.close()
     return student
+
+# ✨ UPDATE: 更新预算的新功能
+def update_student_budget(student_email, new_budget):
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+    cursor.execute("UPDATE students SET monthly_budget = ? WHERE student_email = ?", (new_budget, student_email))
+    conn.commit()
+    conn.close()

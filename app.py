@@ -89,45 +89,70 @@ def add_expense():
 
 from datetime import datetime 
 
-@app.route('/list')
+# ✨ UPDATE: 路由现在支持 POST 请求来接收预算更新
+@app.route('/list', methods=['GET', 'POST'])
 def list_expenses():
     if 'student_name' not in session:
         return redirect('/login')
 
     current_email = session.get('student_email')
+
+    # ✨ UPDATE: 处理用户修改预算的请求
+    if request.method == 'POST':
+        new_budget = request.form.get('monthly_budget')
+        if new_budget:
+            update_student_budget(current_email, float(new_budget))
+            flash("Budget updated successfully!", "success")
+            return redirect(url_for('list_expenses'))
+
     db_data = get_expenses(current_email)
     
-    
+    # ✨ UPDATE: 获取当前用户的预算数据
+    student_data = get_student_by_email(current_email)
+    # 数据库栏位索引: 0=id, 1=name, 2=email, 3=hash, 4=budget
+    monthly_budget = student_data[4] if student_data and len(student_data) > 4 else 500.0
+
     total_amount = 0
     daily_total = 0
     monthly_total = 0
     formatted_expenses = []
 
-    today_str = datetime.now().strftime("%Y-%m-%d")  # 比如 '2026-06-16'
-    current_month_str = datetime.now().strftime("%Y-%m") # 比如 '2026-06'
+    today_str = datetime.now().strftime("%Y-%m-%d")
+    current_month_str = datetime.now().strftime("%Y-%m")
 
     for row in db_data:
         amt = float(row[1])
-        date_str = row[5] # 数据库里的 expense_date 是第 6 个栏位 (索引为 5)
+        date_str = row[5]
 
         total_amount += amt
         
-        # 判断是不是今天的消费
         if date_str == today_str:
             daily_total += amt
             
-        # 判断是不是这个月的消费
         if date_str and date_str.startswith(current_month_str):
             monthly_total += amt
 
-        # ✨ UPDATE: 把日期 (row[5]) 也加进列表里传给前端
         formatted_expenses.append([row[0], row[1], row[2], row[3], row[5]])
+
+    # ✨ UPDATE: 核心业务逻辑 - 计算余额与预警状态
+    balance = monthly_budget - monthly_total
+    abs_balance = abs(balance) # 取绝对值，防止显示负号重叠
+    
+    budget_status = "normal"
+    if balance < 0:
+        budget_status = "danger"  # 超支变红
+    elif balance < (monthly_budget * 0.2):
+        budget_status = "warning" # 低于 20% 变黄
 
     return render_template('list.html', 
                            expenses=formatted_expenses, 
                            total=total_amount,
-                           daily_total=daily_total,      # 传给前端
-                           monthly_total=monthly_total)  # 传给前端
+                           daily_total=daily_total,
+                           monthly_total=monthly_total,
+                           monthly_budget=monthly_budget, # 传给前端
+                           balance=balance,               # 传给前端
+                           abs_balance=abs_balance,       # 传给前端
+                           budget_status=budget_status)   # 传给前端
 
 @app.route('/chart')
 def chart():
