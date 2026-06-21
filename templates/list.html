@@ -50,50 +50,16 @@ list.html
 
         </section>
 
-        <!-- SUMMARY SECTION -->
+        <!-- SUMMARY SECTION (极简版) -->
         <section class="feature-box">
-            <h3>💰 Financial Overview</h3>
-
-            {% if budget_status == 'danger' %}
-            <div style="background-color: #fee2e2; color: #ef4444; padding: 12px; border-radius: 8px; margin-top: 15px; font-weight: bold; text-align: center; border: 2px solid #fca5a5;">
-                🚨 WARNING: Budget Exceeded! You are overspending by RM {{ "%.2f"|format(abs_balance) }}!
-            </div>
-            {% elif budget_status == 'warning' %}
-            <div style="background-color: #fef08a; color: #ca8a04; padding: 12px; border-radius: 8px; margin-top: 15px; font-weight: bold; text-align: center; border: 2px solid #fde047;">
-                ⚠️ CAUTION: Your monthly balance is running low!
-            </div>
-            {% endif %}
-            
-            <div class="quick-add-grid" style="margin-top: 15px; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));">
-                
-                <div class="stats-card" style="margin-top: 0; text-align: center;">
-                    <p style="color: #64748b; font-weight: bold; font-size: 13px;">📅 Today's Spent</p>
-                    <h3 style="color: #38bdf8; margin-top: 5px;">RM {{ "%.2f"|format(daily_total) }}</h3>
-                </div>
-                
-                <div class="stats-card" style="margin-top: 0; text-align: center;">
-                    <p style="color: #64748b; font-weight: bold; font-size: 13px;">🗓️ This Month</p>
-                    <h3 style="color: #f472b6; margin-top: 5px;">RM {{ "%.2f"|format(monthly_total) }}</h3>
-                </div>
-
-                <div class="stats-card" style="margin-top: 0; text-align: center;">
-                    <p style="color: #64748b; font-weight: bold; font-size: 13px;">🎯 Set Budget</p>
-                    <form method="POST" action="/list" style="margin-top: 5px; display: flex; justify-content: center; align-items: center; gap: 4px;">
-                        <span style="font-weight: bold; color: #818cf8; font-size: 14px;">RM</span>
-                        <input type="number" name="monthly_budget" value="{{ "%.2f"|format(monthly_budget) }}" step="0.01" style="width: 70px; padding: 4px; margin: 0; text-align: center; font-weight: bold; color: #475569;" required>
-                        <button type="submit" style="width: auto; padding: 5px 8px; margin: 0; font-size: 11px;">Save</button>
-                    </form>
-                </div>
-
-                <div class="stats-card" style="margin-top: 0; text-align: center; {% if budget_status == 'danger' %}border: 2px solid #ef4444; background: #fef2f2;{% endif %}">
-                    <p style="color: #64748b; font-weight: bold; font-size: 13px;">💳 Balance</p>
-                    <h3 style="margin-top: 5px; {% if budget_status == 'danger' %}color: #ef4444;{% elif budget_status == 'warning' %}color: #ca8a04;{% else %}color: #22c55e;{% endif %}">
-                        {% if balance < 0 %}- {% endif %}RM {{ "%.2f"|format(abs_balance) }}
-                    </h3>
-                </div>
-
-            </div>
+            <h3>📌 Spending Overview</h3>
+            <p>
+                Review your detailed spending history below. 
+                Overall Total: <strong style="color: #f472b6;">RM {{ "%.2f"|format(total) }}</strong> | 
+                Total Records: <strong>{{ expenses|length }}</strong>
+            </p>
         </section>
+        
         <!-- EXPENSE TABLE SECTION -->
     <section class="table-section">
     <form action="/delete_batch" method="POST">
