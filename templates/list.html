@@ -19,12 +19,8 @@ list.html
         <a href="/add">Add Expense</a>
         <a href="/list">View Expenses</a>
         <button id="themeToggle" class="theme-toggle-btn">🌙 Dark Mode</button>
-<<<<<<< HEAD
-=======
 
-        
-        <button id="themeToggle" class="theme-toggle-btn">🌙 Dark Mode</button>
->>>>>>> 956bb04f2a114a18e4712e70b44b95f999b758dc
+    
     </nav>
 
     <!-- MAIN CONTAINER -->
@@ -54,8 +50,7 @@ list.html
 
         </section>
 
-<<<<<<< HEAD
-       <!-- SUMMARY SECTION -->
+        <!-- SUMMARY SECTION -->
         <section class="feature-box">
             <h3>💰 Expense Summary</h3>
             
@@ -76,38 +71,14 @@ list.html
             </p>
         </section>
 
-       <table>
-=======
-        <!-- SUMMARY SECTION -->
-        <section class="feature-box">
-
-            <h3>💰 Expense Summary</h3>
-
-            <p>
-                Total number of expense records:
-                <strong>{{ expenses|length }}</strong>
-            </p>
-
-            <p>
-                Current total spending:
-                <strong>RM {{ total }}</strong>
-            </p>
-
-        </section>
-
         <!-- EXPENSE TABLE SECTION -->
     <section class="table-section">
     <form action="/delete_batch" method="POST">
         <table>
->>>>>>> 956bb04f2a114a18e4712e70b44b95f999b758dc
             <thead>
                 <tr>
                     <th>Select</th>
                     <th>No.</th>
-<<<<<<< HEAD
-                    <th>Date</th> <!-- ✨ UPDATE: 表头新增 Date -->
-=======
->>>>>>> 956bb04f2a114a18e4712e70b44b95f999b758dc
                     <th>Amount (RM)</th>
                     <th>Category</th>
                     <th>Description</th>
@@ -118,15 +89,7 @@ list.html
                 <tr>
                     <td><input type="checkbox" name="expense_ids" value="{{ expense[0] }}" style="width: 18px; height: 18px;"></td>
                     <td>{{ loop.index }}</td>
-<<<<<<< HEAD
-                    
-                    <!-- ✨ UPDATE: 显示日期数据，expense[4] 对应后端传过来的 row[5] -->
-                    <td><span style="background: #f1f5f9; padding: 4px 8px; border-radius: 6px; font-size: 14px;">{{ expense[4] }}</span></td>
-                    
-                    <td style="font-weight: bold; color: #f472b6;">RM {{ "%.2f"|format(expense[1]|float) }}</td>
-=======
                     <td>RM {{ expense[1] }}</td>
->>>>>>> 956bb04f2a114a18e4712e70b44b95f999b758dc
                     <td>{{ expense[2] }}</td>
                     <td>{{ expense[3] }}</td>
                 </tr>

@@ -31,19 +31,11 @@ def register():
         
         try:
             register_student(name, email, hashed_pwd)
-<<<<<<< HEAD
             # register successful
             flash("Account created successfully! Please login.", "success")
             return redirect('/login')
         except:
             # register unsuccessful
-=======
-            # 注册成功，发送成功消息
-            flash("Account created successfully! Please login.", "success")
-            return redirect('/login')
-        except:
-            # 注册失败（邮箱重复），发送错误消息，留在本页
->>>>>>> 956bb04f2a114a18e4712e70b44b95f999b758dc
             flash("Email Already Registered! Please try a different one.", "error")
             return redirect('/register')
             
@@ -66,11 +58,7 @@ def login():
             session['student_email'] = student[2]
             return redirect('/')
         else:
-<<<<<<< HEAD
             # login fail
-=======
-            # 登录失败，发送错误消息，留在本页
->>>>>>> 956bb04f2a114a18e4712e70b44b95f999b758dc
             flash("Invalid Email or Password. Please try again.", "error")
             return redirect('/login')
             
@@ -99,11 +87,8 @@ def add_expense():
 
     return render_template('add.html')
 
-<<<<<<< HEAD
 from datetime import datetime 
 
-=======
->>>>>>> 956bb04f2a114a18e4712e70b44b95f999b758dc
 @app.route('/list')
 def list_expenses():
     if 'student_name' not in session:
@@ -111,7 +96,6 @@ def list_expenses():
 
     current_email = session.get('student_email')
     db_data = get_expenses(current_email)
-<<<<<<< HEAD
     
     
     total_amount = 0
@@ -144,16 +128,6 @@ def list_expenses():
                            total=total_amount,
                            daily_total=daily_total,      # 传给前端
                            monthly_total=monthly_total)  # 传给前端
-=======
-    total_amount = 0
-    formatted_expenses = []
-
-    for row in db_data:
-        total_amount += float(row[1])
-        formatted_expenses.append([row[0], row[1], row[2], row[3]])
-
-    return render_template('list.html', expenses=formatted_expenses, total=total_amount)
->>>>>>> 956bb04f2a114a18e4712e70b44b95f999b758dc
 
 @app.route('/chart')
 def chart():
