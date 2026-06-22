@@ -1,0 +1,205 @@
+/* =========================
+   RESET & BODY (高级渐变背景)
+========================= */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* */
+    background: linear-gradient(135deg, #e0f2fe 0%, #fce7f3 100%);
+    background-attachment: fixed;
+    color: #475569;
+}
+
+/* =========================
+========================= */
+nav {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.4);
+    position: sticky; top: 0; z-index: 100;
+}
+nav .logo { color: #38bdf8; font-weight: bold; font-size: 20px; }
+nav a { color: #64748b; font-weight: 600; text-decoration: none; margin: 0 15px; transition: 0.3s; }
+nav a:hover { color: #f472b6; /* */ }
+
+/* =========================
+   CONTAINERS & CARDS (悬浮卡片特效)
+========================= */
+.container {
+    width: 90%; max-width: 750px; margin: 40px auto;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    border: 1px solid rgba(255,255,255,0.6);
+}
+
+.stats-card, .feature-box, .expense-form-section {
+    background: white; border-radius: 15px; padding: 20px; margin-top: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #f8fafc;
+}
+
+/* ✨ 这里就是悬浮小特效！ */
+.stats-card:hover, .feature-box:hover {
+    transform: translateY(-6px); 
+    box-shadow: 0 12px 25px rgba(244, 114, 182, 0.15); 
+}
+
+/* =========================
+   BUTTONS (渐变按钮)
+========================= */
+button {
+    background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%); /* 蓝紫渐变 */
+    color: white; border: none; padding: 12px 20px; border-radius: 12px;
+    font-size: 15px; font-weight: bold; cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+    width: 100%; margin-top: 10px;
+}
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(56, 189, 248, 0.6);
+}
+.secondary-btn {
+    background: linear-gradient(135deg, #f472b6 0%, #fb7185 100%); /* 猛男粉渐变 */
+    box-shadow: 0 4px 15px rgba(244, 114, 182, 0.4);
+}
+.secondary-btn:hover { box-shadow: 0 6px 20px rgba(244, 114, 182, 0.6); }
+
+/* =========================
+   INPUTS
+========================= */
+input, select {
+    width: 100%; padding: 12px; margin-top: 8px; margin-bottom: 15px;
+    border: 2px solid #e2e8f0; border-radius: 12px;
+    background: #f8fafc; transition: 0.3s; outline: none;
+}
+input:focus, select:focus {
+    border-color: #f472b6; background: white;
+    box-shadow: 0 0 0 4px rgba(244, 114, 182, 0.1);
+}
+
+/* */
+.quick-add-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px;
+}
+.preset-btn {
+    background: white; color: #475569; border: 2px dashed #cbd5e1;
+    box-shadow: none; padding: 10px; font-size: 14px;
+}
+.preset-btn:hover {
+    border-color: #38bdf8; color: #38bdf8; background: #f0f9ff; transform: scale(1.02);
+}
+
+/* =========================
+   TABLE
+========================= */
+table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; border-radius: 12px; overflow: hidden; }
+th { background: #f8fafc; color: #475569; font-weight: 600; padding: 15px; text-align: left; }
+td { padding: 15px; border-bottom: 1px solid #f1f5f9; }
+tr:hover { background: #fdfbfb; }
+
+/* =========================
+   DARK MODE (新增的高级黑模式)
+/* 只有当加上 .dark-mode 时，这些黑色才会覆盖你的渐变色 */
+   DARK MODE
+body.dark-mode {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #e2e8f0;
+}
+
+body.dark-mode nav { background: rgba(15, 23, 42, 0.7); }
+body.dark-mode nav a { color: #94a3b8; }
+body.dark-mode .container { background: rgba(30, 41, 59, 0.85); }
+body.dark-mode .stats-card, body.dark-mode .feature-box, body.dark-mode .expense-form-section { background: #1e293b; border: 1px solid #334155;}
+body.dark-mode input, body.dark-mode select { background: #0f172a; border-color: #334155; color: #e2e8f0; }
+body.dark-mode nav {
+    background: rgba(15, 23, 42, 0.7);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode nav a { color: #94a3b8; }
+body.dark-mode nav a:hover { color: #38bdf8; /* Hover turns tech blue in dark mode */ }
+
+body.dark-mode .container {
+    background: rgba(30, 41, 59, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+body.dark-mode .stats-card, 
+body.dark-mode .feature-box, 
+body.dark-mode .expense-form-section {
+    background: #1e293b;
+    border: 1px solid #334155;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+body.dark-mode .stats-card:hover, 
+body.dark-mode .feature-box:hover {
+    box-shadow: 0 12px 25px rgba(56, 189, 248, 0.15); /* Hover glows blue */
+}
+
+/* Form Inputs Adaptation */
+body.dark-mode input, 
+body.dark-mode select {
+    background: #0f172a;
+    border-color: #334155;
+    color: #e2e8f0;
+}
+
+body.dark-mode input:focus, 
+body.dark-mode select:focus {
+    border-color: #38bdf8;
+    background: #1e293b;
+    box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.1);
+}
+
+body.dark-mode .preset-btn {
+    background: #1e293b;
+    color: #94a3b8;
+    border-color: #475569;
+}
+
+body.dark-mode .preset-btn:hover {
+    background: #0f172a;
+    color: #38bdf8;
+    border-color: #38bdf8;
+}
+
+/* Table Adaptation */
+body.dark-mode table { background: #1e293b; }
+body.dark-mode th { background: #0f172a; color: #cbd5e1; }
+body.dark-mode td { border-bottom: 1px solid #334155; }
+body.dark-mode tr:hover { background: #334155; }
+
+/* */
+.theme-toggle-btn {
+    width: auto; margin-top: 0; padding: 8px 15px; font-size: 14px;
+    background: transparent; border: 1px solid #cbd5e1; color: #475569;
+    box-shadow: none; margin-left: 15px;
+}
+body.dark-mode .theme-toggle-btn { border-color: #475569; color: #e2e8f0; }
+/* Custom styling for the toggle button to override the default 100% width button rule */
+.theme-toggle-btn {
+    width: auto;
+    margin-top: 0;
+    padding: 8px 15px;
+    font-size: 14px;
+    background: transparent;
+    border: 1px solid #cbd5e1;
+    color: #475569;
+    box-shadow: none;
+    margin-left: 15px;
+}
+body.dark-mode .theme-toggle-btn {
+    border-color: #475569;
+    color: #e2e8f0;
+}
