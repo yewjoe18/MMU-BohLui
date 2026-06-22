@@ -5,45 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Expense - MMU BohLui</title>
 
-    <!-- CSS LINK -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
 
-    <!-- NAVIGATION BAR -->
-   <nav>
+    <nav>
         <a href="/">Home</a>
         <a href="/add">Add Expense</a>
         <a href="/list">View Expenses</a>
         
         <button id="themeToggle" class="theme-toggle-btn">🌙 Dark Mode</button>
     </nav>
-    <!-- MAIN CONTAINER -->
     <div class="container">
 
-        <!-- PAGE TITLE -->
         <header>
-            <h1>💸 Add New Expense</h1>
+            <h1>💸 Add New Record</h1>
             <p class="subtitle">
-                Record your spending information below
+                Record your spending or income information below
             </p>
         </header>
 
-        <!-- INFORMATION SECTION -->
         <section class="feature-box">
 
-            <h3>📌 Expense Tracking</h3>
+            <h3>📌 Financial Tracking</h3>
 
             <p>
-                Use this form to save your daily expenses.
-                Keeping track of your spending helps you
+                Use this form to save your daily transactions.
+                Keeping track of your money helps you
                 manage your finances more effectively.
             </p>
 
         </section>
 
-        <!-- EXPENSE FORM -->
         <section class="expense-form-section">
 
 <div class="feature-box">
@@ -66,81 +60,72 @@ function fillQuickAdd(category, desc, amount) {
 </script>
             <form method="POST" action="/add">
 
-                <!-- AMOUNT -->
                 <div class="form-group">
-
-                    <label for="amount">
-                        Expense Amount (RM)
+                    <label for="trans_type">
+                        Transaction Type
                     </label>
+                    <select id="trans_type" name="trans_type" style="border-color: #38bdf8; font-weight: bold;">
+                        <option value="Expense">🔻 Expense (Deduct Money)</option>
+                        <option value="Income">🟩 Income (Add Money)</option>
+                    </select>
+                </div>
 
+                <div class="form-group">
+                    <label for="amount">
+                        Amount (RM)
+                    </label>
                     <input 
                         type="number"
                         id="amount"
                         name="amount"
-                        placeholder="Enter expense amount"
-                        required
+                        placeholder="Enter amount"
+                        step="0.01"  required
                     >
-
                 </div>
 
-                <!-- CATEGORY -->
                 <div class="form-group">
 
                     <label for="category">
-                        Expense Category
+                        Category
                     </label>
 
                     <select id="category" name="category">
 
-                        <option value="Food">
-                            Food
-                        </option>
+                        <option value="Food">Food</option>
+                        <option value="Transport">Transport</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Bills">Bills</option>
+                        <option value="Shopping">Shopping</option>
+                        
+                        <option value="Allowance">💰 Allowance (Income)</option>
+                        <option value="Salary">💼 Part-time Job (Income)</option>
+                        <option value="Bonus">🎁 Bonus / Others (Income)</option>
 
-                        <option value="Transport">
-                            Transport
-                        </option>
-
-                        <option value="Entertainment">
-                            Entertainment
-                        </option>
-
-                        <option value="Bills">
-                            Bills
-                        </option>
-
-                        <option value="Shopping">
-                            Shopping
-                        </option>
-
-                        <option value="Others">
-                            Others
-                        </option>
+                        <option value="Others">Others</option>
 
                     </select>
 
                 </div>
 
-                <!-- DESCRIPTION -->
                 <div class="form-group">
 
                     <label for="description">
-                        Expense Description
+                        Description
                     </label>
 
                     <input
                         type="text"
                         id="description"
                         name="description"
-                        placeholder="Example: Lunch at cafeteria"
+                        placeholder="Example: Lunch at cafeteria or Part-time Salary"
                     >
 
                 </div>
 
-                <!-- DATE -->
                 <div class="form-group">
 
                     <label for="date">
-                        Expense Date
+                        Date
                     </label>
 
                     <input
@@ -151,7 +136,6 @@ function fillQuickAdd(category, desc, amount) {
 
                 </div>
 
-                <!-- NOTES -->
                 <div class="form-group">
 
                     <label for="notes">
@@ -167,11 +151,10 @@ function fillQuickAdd(category, desc, amount) {
 
                 </div>
 
-                <!-- BUTTON SECTION -->
                 <div class="button-section">
 
                     <button type="submit">
-                        Save Expense
+                        Save Record
                     </button>
 
                 </div>
@@ -180,13 +163,12 @@ function fillQuickAdd(category, desc, amount) {
 
         </section>
 
-        <!-- TIPS SECTION -->
         <section class="feature-box">
 
             <h3>💡 Tips</h3>
 
             <ul>
-                <li>Track your expenses daily</li>
+                <li>Track your money daily</li>
                 <li>Record accurate amounts</li>
                 <li>Review your spending regularly</li>
                 <li>Separate expenses by category</li>
@@ -194,7 +176,6 @@ function fillQuickAdd(category, desc, amount) {
 
         </section>
 
-        <!-- NAVIGATION -->
         <section class="navigation-section">
 
             <a href="/">
@@ -214,17 +195,4 @@ function fillQuickAdd(category, desc, amount) {
     </footer>
 <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
-<<<<<<< HEAD
-=======
-</html>
-
-<label>Date</label>
-
-<input
-    type="date"
-    name="expense_date"
-    required
->
-
->>>>>>> 956bb04f2a114a18e4712e70b44b95f999b758dc
 </html>

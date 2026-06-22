@@ -1,154 +1,92 @@
-list.html 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expense Records - MMU BohLui</title>
-
-    <!-- CSS FILE -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
 
-    <!-- NAVIGATION BAR -->
     <nav>
         <a href="/">Home</a>
         <a href="/add">Add Expense</a>
         <a href="/list">View Expenses</a>
         <button id="themeToggle" class="theme-toggle-btn">🌙 Dark Mode</button>
-<<<<<<< HEAD
-=======
-
-        
-        <button id="themeToggle" class="theme-toggle-btn">🌙 Dark Mode</button>
->>>>>>> 956bb04f2a114a18e4712e70b44b95f999b758dc
     </nav>
 
-    <!-- MAIN CONTAINER -->
     <div class="container">
 
-        <!-- PAGE HEADER -->
         <header>
-
-            <h1>📊 Expense Records</h1>
-
+            <h1>📊 Financial Records</h1>
             <p class="subtitle">
-                Review and monitor your spending history
+                Review and monitor your income and spending history
             </p>
-
         </header>
 
-        <!-- INTRODUCTION SECTION -->
         <section class="feature-box">
-
             <h3>📌 Spending Overview</h3>
-
             <p>
-                This section displays all recorded expenses entered by the user.
-                Users can review their spending activities and better understand
-                where their money is being used.
+                Review your detailed spending history below. 
+                Total Expense: <strong style="color: #ef4444;">RM {{ "%.2f"|format(total) }}</strong> | 
+                Total Records: <strong>{{ expenses|length }}</strong>
             </p>
-
         </section>
 
-<<<<<<< HEAD
-       <!-- SUMMARY SECTION -->
         <section class="feature-box">
-            <h3>💰 Expense Summary</h3>
-            
-            <!-- ✨ UPDATE: 使用你之前写的网格布局实现左右卡片 -->
-            <div class="quick-add-grid" style="margin-top: 15px;">
-                <div class="stats-card" style="margin-top: 0; text-align: center;">
-                    <p style="color: #64748b; font-weight: bold;">📅 Today's Spent</p>
-                    <h2 style="color: #38bdf8; margin-top: 5px;">RM {{ "%.2f"|format(daily_total) }}</h2>
-                </div>
-                <div class="stats-card" style="margin-top: 0; text-align: center;">
-                    <p style="color: #64748b; font-weight: bold;">🗓️ This Month</p>
-                    <h2 style="color: #f472b6; margin-top: 5px;">RM {{ "%.2f"|format(monthly_total) }}</h2>
-                </div>
-            </div>
-
-            <p style="text-align: center; margin-top: 15px; color: #475569;">
-                Overall Total: <strong>RM {{ "%.2f"|format(total) }}</strong> | Total Records: <strong>{{ expenses|length }}</strong>
-            </p>
+            <form method="POST" action="/delete_batch">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Select</th>
+                            <th>No.</th>
+                            <th>Date</th>
+                            <th>Amount (RM)</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Type</th> </tr>
+                    </thead>
+                    <tbody>
+                        {% for expense in expenses %}
+                        <tr>
+                            <td><input type="checkbox" name="expense_ids" value="{{ expense[0] }}" style="width: 18px; height: 18px;"></td>
+                            <td>{{ loop.index }}</td>
+                            
+                            <td><span style="background: #f1f5f9; padding: 4px 8px; border-radius: 6px; font-size: 14px;">{{ expense[4] }}</span></td>
+                            
+                            <td>
+                                {% if expense[5] == 'Income' %}
+                                    <span style="color: #22c55e; font-weight: bold; background: #dcfce3; padding: 4px 8px; border-radius: 6px;">+ RM {{ "%.2f"|format(expense[1]|float) }}</span>
+                                {% else %}
+                                    <span style="color: #ef4444; font-weight: bold;">- RM {{ "%.2f"|format(expense[1]|float) }}</span>
+                                {% endif %}
+                            </td>
+                            
+                            <td>{{ expense[2] }}</td>
+                            <td>{{ expense[3] }}</td>
+                            
+                            <td>
+                                <span style="font-size: 12px; font-weight: bold; padding: 3px 6px; border-radius: 4px; {% if expense[5] == 'Income' %}background: #dcfce3; color: #16a34a;{% else %}background: #fee2e2; color: #dc2626;{% endif %}">
+                                    {{ expense[5] }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                </table>
+                
+                <button type="submit" class="secondary-btn" style="margin-top: 15px;">
+                    🗑️ Delete Selected
+                </button>
+            </form>
         </section>
 
-       <table>
-=======
-        <!-- SUMMARY SECTION -->
-        <section class="feature-box">
+    </div>
 
-            <h3>💰 Expense Summary</h3>
-
-            <p>
-                Total number of expense records:
-                <strong>{{ expenses|length }}</strong>
-            </p>
-
-            <p>
-                Current total spending:
-                <strong>RM {{ total }}</strong>
-            </p>
-
-        </section>
-
-        <!-- EXPENSE TABLE SECTION -->
-    <section class="table-section">
-    <form action="/delete_batch" method="POST">
-        <table>
->>>>>>> 956bb04f2a114a18e4712e70b44b95f999b758dc
-            <thead>
-                <tr>
-                    <th>Select</th>
-                    <th>No.</th>
-<<<<<<< HEAD
-                    <th>Date</th> <!-- ✨ UPDATE: 表头新增 Date -->
-=======
->>>>>>> 956bb04f2a114a18e4712e70b44b95f999b758dc
-                    <th>Amount (RM)</th>
-                    <th>Category</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for expense in expenses %}
-                <tr>
-                    <td><input type="checkbox" name="expense_ids" value="{{ expense[0] }}" style="width: 18px; height: 18px;"></td>
-                    <td>{{ loop.index }}</td>
-<<<<<<< HEAD
-                    
-                    <!-- ✨ UPDATE: 显示日期数据，expense[4] 对应后端传过来的 row[5] -->
-                    <td><span style="background: #f1f5f9; padding: 4px 8px; border-radius: 6px; font-size: 14px;">{{ expense[4] }}</span></td>
-                    
-                    <td style="font-weight: bold; color: #f472b6;">RM {{ "%.2f"|format(expense[1]|float) }}</td>
-=======
-                    <td>RM {{ expense[1] }}</td>
->>>>>>> 956bb04f2a114a18e4712e70b44b95f999b758dc
-                    <td>{{ expense[2] }}</td>
-                    <td>{{ expense[3] }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        
-        <button type="submit" class="secondary-btn" style="margin-top: 15px;">
-            🗑️ Delete Selected
-        </button>
-    </form>
-</section>
-
-    <!-- FOOTER -->
     <footer>
-
-        <p>
-            MMU BohLui Expense Tracker System © 2026
-        </p>
-
+        <p>MMU BohLui Expense Tracker System © 2026</p>
     </footer>
-
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
-
 </html>
