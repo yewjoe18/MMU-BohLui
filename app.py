@@ -173,16 +173,11 @@ def list_expenses():
     current_email = session.get('student_email')
     db_data = get_expenses(current_email)
     
-<<<<<<< HEAD
-=======
-    
->>>>>>> 2e75d307d0e1e618d462d511686dae2b013a2c7b
     total_amount = 0
     daily_total = 0
     monthly_total = 0
     formatted_expenses = []
 
-<<<<<<< HEAD
     for row in db_data:
         amt = float(row[1])
         trans_type = row[6] if len(row) > 6 else 'Expense'
@@ -193,33 +188,6 @@ def list_expenses():
             
         # 把类型 (trans_type) 加到列表的最后传给前端
         formatted_expenses.append([row[0], row[1], row[2], row[3], row[5], trans_type])
-=======
-    today_str = datetime.now().strftime("%Y-%m-%d")  # 比如 '2026-06-16'
-    current_month_str = datetime.now().strftime("%Y-%m") # 比如 '2026-06'
-
-    for row in db_data:
-        amt = float(row[1])
-        date_str = row[5] # 数据库里的 expense_date 是第 6 个栏位 (索引为 5)
-
-        total_amount += amt
-        
-        # 判断是不是今天的消费
-        if date_str == today_str:
-            daily_total += amt
-            
-        # 判断是不是这个月的消费
-        if date_str and date_str.startswith(current_month_str):
-            monthly_total += amt
-
-        # ✨ UPDATE: 把日期 (row[5]) 也加进列表里传给前端
-        formatted_expenses.append([row[0], row[1], row[2], row[3], row[5]])
-
-    return render_template('list.html', 
-                           expenses=formatted_expenses, 
-                           total=total_amount,
-                           daily_total=daily_total,      # 传给前端
-                           monthly_total=monthly_total)  # 传给前端
->>>>>>> 2e75d307d0e1e618d462d511686dae2b013a2c7b
 
     return render_template('list.html', 
                            expenses=formatted_expenses, 
@@ -288,10 +256,6 @@ def chart():
                            daily_total=daily_total)
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 2e75d307d0e1e618d462d511686dae2b013a2c7b
 @app.route('/delete_batch', methods=['POST'])
 def delete_batch():
     if 'student_name' not in session:

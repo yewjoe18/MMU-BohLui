@@ -44,10 +44,6 @@ def get_expenses(current_email):
     conn.close()
     return data
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 2e75d307d0e1e618d462d511686dae2b013a2c7b
 def delete_batch_expenses(expense_ids, current_email):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
@@ -67,12 +63,8 @@ def create_student_table():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             student_name TEXT,
             student_email TEXT UNIQUE,
-<<<<<<< HEAD
             password_hash TEXT,
             monthly_budget REAL DEFAULT 500.0
-=======
-            password_hash TEXT 
->>>>>>> 2e75d307d0e1e618d462d511686dae2b013a2c7b
         )
     """)
     try:
