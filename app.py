@@ -13,29 +13,48 @@ create_student_table()
 
 from datetime import datetime # 确保最上面有这行
 
-# ✨ UPDATE: 把主页路由升级，支持接收预算修改，并计算所有看板数据
+# ✨ UPDATE: 终极装甲版 - 精准栏位抓取，无视任何数据库错位 Bug！
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if 'student_name' not in session:
         return redirect('/login')
 
     current_email = session.get('student_email')
+    current_name = session.get('student_name')
+    import sqlite3
 
-    # 处理用户在主页修改预算的请求
+    # 1. 暴力保存：双重锁定匹配，必定存入！
     if request.method == 'POST':
         new_budget = request.form.get('monthly_budget')
         if new_budget:
-            update_student_budget(current_email, float(new_budget))
-            flash("Budget updated successfully!", "success")
-            return redirect(url_for('home'))
+            conn = sqlite3.connect('expense.db')
+            cursor = conn.cursor()
+            cursor.execute("UPDATE students SET monthly_budget = ? WHERE student_email = ? OR student_name = ?", 
+                           (float(new_budget), current_email, current_name))
+            conn.commit()
+            conn.close()
+            flash(f"Success! Budget updated to RM {new_budget}", "success")
+            return redirect('/')
 
-    # 获取数据库数据
+    # 2. 精准读取：不再盲抓，直接点名索要 monthly_budget 字段！
     db_data = get_expenses(current_email)
-    student_data = get_student_by_email(current_email)
-    monthly_budget = student_data[4] if student_data and len(student_data) > 4 else 500.0
+    
+    conn = sqlite3.connect('expense.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT monthly_budget FROM students WHERE student_email = ? OR student_name = ?", (current_email, current_name))
+    budget_row = cursor.fetchone()
+    conn.close()
 
+    # 安全解析：只认我们抓出来的确切数字
+    if budget_row and budget_row[0] is not None:
+        monthly_budget = float(budget_row[0])
+    else:
+        monthly_budget = 00.0
+
+    # 3. 统计花费 (确保 app.py 最上面有 from datetime import datetime)
     daily_total = 0
     monthly_total = 0
+    from datetime import datetime
     today_str = datetime.now().strftime("%Y-%m-%d")
     current_month_str = datetime.now().strftime("%Y-%m")
 
@@ -47,7 +66,7 @@ def home():
         if date_str and date_str.startswith(current_month_str):
             monthly_total += amt
 
-    # 计算余额与预警状态
+    # 4. 结算与预警状态
     balance = monthly_budget - monthly_total
     abs_balance = abs(balance)
     
@@ -57,9 +76,8 @@ def home():
     elif balance < (monthly_budget * 0.2):
         budget_status = "warning"
 
-    # 把所有数据传给 index.html
     return render_template('index.html', 
-                           student_name=session['student_name'],
+                           student_name=current_name,
                            daily_total=daily_total,
                            monthly_total=monthly_total,
                            monthly_budget=monthly_budget,

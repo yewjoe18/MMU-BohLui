@@ -75,17 +75,28 @@
     ========================== -->
     <div class="container">
 
-        <!-- ✨ 植入 Flash 消息提示框 -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
+       {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-                {% for category, message in messages %}
-                    <div style="padding: 10px; margin-bottom: 15px; border-radius: 8px; text-align: center; font-weight: bold; background-color: #dcfce3; color: #22c55e; border: 1px solid #86efac;">
-                        {{ message }}
-                    </div>
-                {% endfor %}
+                <div id="alert-container">
+                    {% for category, message in messages %}
+                        <div class="auto-fade-alert" style="padding: 10px; margin-bottom: 15px; border-radius: 8px; text-align: center; font-weight: bold; background-color: #dcfce3; color: #22c55e; border: 1px solid #86efac; transition: all 0.5s ease;">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <script>
+                    setTimeout(() => {
+                        let alerts = document.querySelectorAll('.auto-fade-alert');
+                        alerts.forEach(alert => {
+                            alert.style.opacity = '0'; // 1. 先变透明
+                            setTimeout(() => alert.style.display = 'none', 500); // 2. 0.5秒后彻底移除
+                        });
+                    }, 2500); // 等待 2.5 秒
+                </script>
             {% endif %}
         {% endwith %}
-
+        
         <!-- ✨ 将动态看板移动到这里！真正的主页 Dashboard！ -->
         <section class="feature-box" style="margin-top: 0; border: 2px solid #e2e8f0;">
             <h3>💰 Financial Overview</h3>
