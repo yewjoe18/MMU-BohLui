@@ -46,56 +46,103 @@
         
     </nav>
 
-
-    <!-- =========================
-         HERO SECTION
+<!-- =========================
+         HERO SECTION (修复了按钮排版)
     ========================== -->
-
-    <section class="hero">
-
-        <div class="hero-content">
-
-            <h1>
-                Welcome Back,
-                {{ student_name }} 👋
+    <section class="hero" style="text-align: center; padding: 40px 20px;">
+        <div class="hero-content" style="max-width: 800px; margin: 0 auto;">
+            <h1 style="font-size: 28px; color: #334155;">
+                Welcome Back, {{ student_name }} 👋
             </h1>
-
-            <p>
-                Track your expenses smarter and
-                manage your financial habits efficiently
-                using MMU BohLui.
+            <p style="color: #64748b; margin-top: 10px;">
+                Track your expenses smarter and manage your financial habits efficiently.
             </p>
 
-            <div class="hero-buttons">
-
-                <a href="/add">
-
-                    <button>
-                        ➕ Add Expense
-                    </button>
-
+            <!-- ✨ 修复了奇葩的拉长按钮，改用 Flexbox 并排显示 -->
+            <div class="hero-buttons" style="display: flex; gap: 15px; justify-content: center; margin-top: 25px;">
+                <a href="/add" style="text-decoration: none; width: 200px;">
+                    <button style="margin: 0;">➕ Add Expense</button>
                 </a>
-
-                <a href="/list">
-
-                    <button class="secondary-btn">
-                        📊 View Records
-                    </button>
-
+                <a href="/list" style="text-decoration: none; width: 200px;">
+                    <button class="secondary-btn" style="margin: 0;">📊 View Records</button>
                 </a>
-
             </div>
-
         </div>
-
     </section>
-
 
     <!-- =========================
          MAIN CONTENT
     ========================== -->
-
     <div class="container">
+
+       {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div id="alert-container">
+                    {% for category, message in messages %}
+                        <div class="auto-fade-alert" style="padding: 10px; margin-bottom: 15px; border-radius: 8px; text-align: center; font-weight: bold; background-color: #dcfce3; color: #22c55e; border: 1px solid #86efac; transition: all 0.5s ease;">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <script>
+                    setTimeout(() => {
+                        let alerts = document.querySelectorAll('.auto-fade-alert');
+                        alerts.forEach(alert => {
+                            alert.style.opacity = '0'; // 1. 先变透明
+                            setTimeout(() => alert.style.display = 'none', 500); // 2. 0.5秒后彻底移除
+                        });
+                    }, 2500); // 等待 2.5 秒
+                </script>
+            {% endif %}
+        {% endwith %}
+        
+        <!-- ✨ 将动态看板移动到这里！真正的主页 Dashboard！ -->
+        <section class="feature-box" style="margin-top: 0; border: 2px solid #e2e8f0;">
+            <h3>💰 Financial Overview</h3>
+
+            <!-- 🚨 超支警告框 -->
+            {% if budget_status == 'danger' %}
+            <div style="background-color: #fee2e2; color: #ef4444; padding: 12px; border-radius: 8px; margin-top: 15px; font-weight: bold; text-align: center; border: 2px solid #fca5a5;">
+                🚨 WARNING: Budget Exceeded! You are overspending by RM {{ "%.2f"|format(abs_balance) }}!
+            </div>
+            {% elif budget_status == 'warning' %}
+            <div style="background-color: #fef08a; color: #ca8a04; padding: 12px; border-radius: 8px; margin-top: 15px; font-weight: bold; text-align: center; border: 2px solid #fde047;">
+                ⚠️ CAUTION: Your monthly balance is running low!
+            </div>
+            {% endif %}
+            
+            <!-- 4格数据看板 -->
+            <div class="quick-add-grid" style="margin-top: 15px; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));">
+                
+                <div class="stats-card" style="margin-top: 0; text-align: center;">
+                    <p style="color: #64748b; font-weight: bold; font-size: 13px;">📅 Today's Spent</p>
+                    <h3 style="color: #38bdf8; margin-top: 5px;">RM {{ "%.2f"|format(daily_total) }}</h3>
+                </div>
+                
+                <div class="stats-card" style="margin-top: 0; text-align: center;">
+                    <p style="color: #64748b; font-weight: bold; font-size: 13px;">🗓️ This Month</p>
+                    <h3 style="color: #f472b6; margin-top: 5px;">RM {{ "%.2f"|format(monthly_total) }}</h3>
+                </div>
+
+                <div class="stats-card" style="margin-top: 0; text-align: center;">
+                    <p style="color: #64748b; font-weight: bold; font-size: 13px;">🎯 Set Budget</p>
+                    <form method="POST" action="/" style="margin-top: 5px; display: flex; justify-content: center; align-items: center; gap: 4px;">
+                        <span style="font-weight: bold; color: #818cf8; font-size: 14px;">RM</span>
+                        <input type="number" name="monthly_budget" value="{{ "%.2f"|format(monthly_budget) }}" step="0.01" style="width: 70px; padding: 4px; margin: 0; text-align: center; font-weight: bold; color: #475569;" required>
+                        <button type="submit" style="width: auto; padding: 5px 8px; margin: 0; font-size: 11px;">Save</button>
+                    </form>
+                </div>
+
+                <div class="stats-card" style="margin-top: 0; text-align: center; {% if budget_status == 'danger' %}border: 2px solid #ef4444; background: #fef2f2;{% endif %}">
+                    <p style="color: #64748b; font-weight: bold; font-size: 13px;">💳 Balance</p>
+                    <h3 style="margin-top: 5px; {% if budget_status == 'danger' %}color: #ef4444;{% elif budget_status == 'warning' %}color: #ca8a04;{% else %}color: #22c55e;{% endif %}">
+                        {% if balance < 0 %}- {% endif %}RM {{ "%.2f"|format(abs_balance) }}
+                    </h3>
+                </div>
+
+            </div>
+        </section>
 
 
         <!-- =========================

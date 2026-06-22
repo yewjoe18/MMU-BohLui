@@ -11,12 +11,79 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=30)
 create_table()
 create_student_table()
 
-@app.route('/')
+from datetime import datetime # 确保最上面有这行
+
+# ✨ UPDATE: 终极装甲版 - 精准栏位抓取，无视任何数据库错位 Bug！
+@app.route('/', methods=['GET', 'POST'])
 def home():
     if 'student_name' not in session:
         return redirect('/login')
-    return render_template('index.html', student_name=session['student_name'])
 
+    current_email = session.get('student_email')
+    current_name = session.get('student_name')
+    import sqlite3
+
+    # 1. 暴力保存：双重锁定匹配，必定存入！
+    if request.method == 'POST':
+        new_budget = request.form.get('monthly_budget')
+        if new_budget:
+            conn = sqlite3.connect('expense.db')
+            cursor = conn.cursor()
+            cursor.execute("UPDATE students SET monthly_budget = ? WHERE student_email = ? OR student_name = ?", 
+                           (float(new_budget), current_email, current_name))
+            conn.commit()
+            conn.close()
+            flash(f"Success! Budget updated to RM {new_budget}", "success")
+            return redirect('/')
+
+    # 2. 精准读取：不再盲抓，直接点名索要 monthly_budget 字段！
+    db_data = get_expenses(current_email)
+    
+    conn = sqlite3.connect('expense.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT monthly_budget FROM students WHERE student_email = ? OR student_name = ?", (current_email, current_name))
+    budget_row = cursor.fetchone()
+    conn.close()
+
+    # 安全解析：只认我们抓出来的确切数字
+    if budget_row and budget_row[0] is not None:
+        monthly_budget = float(budget_row[0])
+    else:
+        monthly_budget = 00.0
+
+    # 3. 统计花费 (确保 app.py 最上面有 from datetime import datetime)
+    daily_total = 0
+    monthly_total = 0
+    from datetime import datetime
+    today_str = datetime.now().strftime("%Y-%m-%d")
+    current_month_str = datetime.now().strftime("%Y-%m")
+
+    for row in db_data:
+        amt = float(row[1])
+        date_str = row[5]
+        if date_str == today_str:
+            daily_total += amt
+        if date_str and date_str.startswith(current_month_str):
+            monthly_total += amt
+
+    # 4. 结算与预警状态
+    balance = monthly_budget - monthly_total
+    abs_balance = abs(balance)
+    
+    budget_status = "normal"
+    if balance < 0:
+        budget_status = "danger"
+    elif balance < (monthly_budget * 0.2):
+        budget_status = "warning"
+
+    return render_template('index.html', 
+                           student_name=current_name,
+                           daily_total=daily_total,
+                           monthly_total=monthly_total,
+                           monthly_budget=monthly_budget,
+                           balance=balance,
+                           abs_balance=abs_balance,
+                           budget_status=budget_status)
 # =========================
 # REGISTER PAGE
 # =========================
@@ -89,46 +156,31 @@ def add_expense():
 
 from datetime import datetime 
 
+# ✨ UPDATE: 极简版的 list 路由，去掉了所有不需要的预算计算逻辑
 @app.route('/list')
 def list_expenses():
     if 'student_name' not in session:
         return redirect('/login')
 
     current_email = session.get('student_email')
+    
+    # 1. 拿数据库里的所有账单
     db_data = get_expenses(current_email)
     
-    
     total_amount = 0
-    daily_total = 0
-    monthly_total = 0
     formatted_expenses = []
 
-    today_str = datetime.now().strftime("%Y-%m-%d")  # 比如 '2026-06-16'
-    current_month_str = datetime.now().strftime("%Y-%m") # 比如 '2026-06'
-
+    # 2. 算总额，并整理表格数据
     for row in db_data:
-        amt = float(row[1])
-        date_str = row[5] # 数据库里的 expense_date 是第 6 个栏位 (索引为 5)
-
-        total_amount += amt
-        
-        # 判断是不是今天的消费
-        if date_str == today_str:
-            daily_total += amt
-            
-        # 判断是不是这个月的消费
-        if date_str and date_str.startswith(current_month_str):
-            monthly_total += amt
-
-        # ✨ UPDATE: 把日期 (row[5]) 也加进列表里传给前端
+        total_amount += float(row[1])
+        # 注意：这里依然要把 row[5] (日期) 放进去，保证你的 Expense Records 表格能显示日期！
         formatted_expenses.append([row[0], row[1], row[2], row[3], row[5]])
 
+    # 3. 只传表格数据和总金额给 list.html
     return render_template('list.html', 
                            expenses=formatted_expenses, 
-                           total=total_amount,
-                           daily_total=daily_total,      # 传给前端
-                           monthly_total=monthly_total)  # 传给前端
-
+                           total=total_amount)
+    
 @app.route('/chart')
 def chart():
     if 'student_name' not in session:
