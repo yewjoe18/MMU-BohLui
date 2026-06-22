@@ -22,28 +22,13 @@
          NAVIGATION BAR
     ========================== -->
 
-    <nav>
-
-        <div class="logo">
-            💸 MMU BohLui
-        </div>
-
-        <div class="nav-links">
-
-            <a href="/">Home</a>
-
-            <a href="/add">Add Expense</a>
-
-            <a href="/list">Expense Records</a>
-
-            <a href="/chart">Charts</a>
-
-            <a href="/logout">Logout</a>
-        
+   <nav>
+        <a href="/">Home</a>
+        <a href="/add">Add Expense</a>
+        <a href="/list">View Expenses</a>
+        <a href="/chart">📈 Chart</a>
+        <a href="/logout" style="color: #ef4444; font-weight: bold; margin-left: 20px;">Logout</a>
         <button id="themeToggle" class="theme-toggle-btn">🌙 Dark Mode</button>
-
-        </div>
-        
     </nav>
 
 <!-- =========================
@@ -118,6 +103,11 @@
                 <div class="stats-card" style="margin-top: 0; text-align: center;">
                     <p style="color: #64748b; font-weight: bold; font-size: 13px;">📅 Today's Spent</p>
                     <h3 style="color: #38bdf8; margin-top: 5px;">RM {{ "%.2f"|format(daily_total) }}</h3>
+                </div>
+                
+                <div class="stats-card" style="margin-top: 0; text-align: center;">
+                    <p style="color: #64748b; font-weight: bold; font-size: 13px;">💵 Monthly Income</p>
+                    <h3 style="color: #22c55e; margin-top: 5px;">+ RM {{ "%.2f"|format(monthly_income) }}</h3>
                 </div>
                 
                 <div class="stats-card" style="margin-top: 0; text-align: center;">
