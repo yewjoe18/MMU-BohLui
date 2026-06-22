@@ -1,5 +1,3 @@
-list.html 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,8 +16,9 @@ list.html
         <a href="/">Home</a>
         <a href="/add">Add Expense</a>
         <a href="/list">View Expenses</a>
-        
         <button id="themeToggle" class="theme-toggle-btn">🌙 Dark Mode</button>
+
+    
     </nav>
 
     <!-- MAIN CONTAINER -->
@@ -51,19 +50,23 @@ list.html
 
         <!-- SUMMARY SECTION -->
         <section class="feature-box">
-
             <h3>💰 Expense Summary</h3>
+            
+            <!-- ✨ UPDATE: 使用你之前写的网格布局实现左右卡片 -->
+            <div class="quick-add-grid" style="margin-top: 15px;">
+                <div class="stats-card" style="margin-top: 0; text-align: center;">
+                    <p style="color: #64748b; font-weight: bold;">📅 Today's Spent</p>
+                    <h2 style="color: #38bdf8; margin-top: 5px;">RM {{ "%.2f"|format(daily_total) }}</h2>
+                </div>
+                <div class="stats-card" style="margin-top: 0; text-align: center;">
+                    <p style="color: #64748b; font-weight: bold;">🗓️ This Month</p>
+                    <h2 style="color: #f472b6; margin-top: 5px;">RM {{ "%.2f"|format(monthly_total) }}</h2>
+                </div>
+            </div>
 
-            <p>
-                Total number of expense records:
-                <strong>{{ expenses|length }}</strong>
+            <p style="text-align: center; margin-top: 15px; color: #475569;">
+                Overall Total: <strong>RM {{ "%.2f"|format(total) }}</strong> | Total Records: <strong>{{ expenses|length }}</strong>
             </p>
-
-            <p>
-                Current total spending:
-                <strong>RM {{ total }}</strong>
-            </p>
-
         </section>
 
         <!-- EXPENSE TABLE SECTION -->

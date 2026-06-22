@@ -36,7 +36,7 @@ def get_expenses(current_email):
     conn.close()
     return data
 
-# ✨ 新增：批量删除功能
+
 def delete_batch_expenses(expense_ids, current_email):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
@@ -55,7 +55,7 @@ def create_student_table():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             student_name TEXT,
             student_email TEXT UNIQUE,
-            password_hash TEXT  /* ✨ 新增密码栏位 */
+            password_hash TEXT 
         )
     """)
     conn.commit()
