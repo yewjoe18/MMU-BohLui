@@ -2,6 +2,7 @@ import sqlite3
 
 DB_NAME = "expense.db"
 
+# ✨ UPDATE: 给数据库加上 type（收入/支出）属性，并加入防爆补丁
 def create_table():
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
@@ -12,19 +13,26 @@ def create_table():
             category TEXT,
             description TEXT,
             student_email TEXT,
-            expense_date TEXT
+            expense_date TEXT,
+            type TEXT DEFAULT 'Expense'  /* ✨ 新增：默认是支出 */
         )
     """)
+    # 强行给旧表加上新栏位，旧账单自动变成 'Expense'，绝对不会报错！
+    try:
+        cursor.execute("ALTER TABLE expenses ADD COLUMN type TEXT DEFAULT 'Expense'")
+    except:
+        pass
     conn.commit()
     conn.close()
 
-def insert_expense(amount, category, description, student_email, expense_date):
+# ✨ UPDATE: 插入数据时，接收 trans_type (Income 还是 Expense)
+def insert_expense(amount, category, description, student_email, expense_date, trans_type='Expense'):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     cursor.execute("""
-        INSERT INTO expenses (amount, category, description, student_email, expense_date)
-        VALUES (?, ?, ?, ?, ?)
-    """, (amount, category, description, student_email, expense_date))
+        INSERT INTO expenses (amount, category, description, student_email, expense_date, type)
+        VALUES (?, ?, ?, ?, ?, ?)
+    """, (amount, category, description, student_email, expense_date, trans_type))
     conn.commit()
     conn.close()
 
@@ -46,7 +54,7 @@ def delete_batch_expenses(expense_ids, current_email):
     conn.commit()
     conn.close()
 
-# ✨ UPDATE:  monthly_budget 
+# ✨ UPDATE: 这里是带有 monthly_budget 的新图纸！
 def create_student_table():
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
@@ -86,7 +94,7 @@ def get_student_by_email(student_email):
     conn.close()
     return student
 
-# ✨ UPDATE
+# ✨ UPDATE: 更新预算的新功能
 def update_student_budget(student_email, new_budget):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
