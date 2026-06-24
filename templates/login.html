@@ -2,41 +2,102 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Student Login - MMU BohLui</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Records - MMU BohLui</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
+
+  <nav>
+        <a href="/">Home</a>
+        <a href="/add">Add Expense</a>
+        <a href="/list">View Expenses</a>
+<<<<<<< HEAD
+        <a href="/chart">📈 Chart</a>
+        <a href="/logout" style="color: #ef4444; font-weight: bold; margin-left: 20px;">Logout</a>
+        <button id="themeToggle" class="theme-toggle-btn">🌙 Dark Mode</button>
+=======
+        <a href="/chart">📈 Chart</a>  <button id="themeToggle" class="theme-toggle-btn">🌙 Dark Mode</button>
+>>>>>>> 168c87b07d5ec4b57bd9c25d53067f210b2f0fb2
+    </nav>
+    
     <div class="container">
-        <h1 style="text-align: center;">🎓 Student Login</h1>
-        <p class="subtitle" style="text-align: center;">Welcome back to MMU BohLui</p>
 
-        <div class="feature-box">
-            {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div style="padding: 10px; margin-bottom: 15px; border-radius: 8px; text-align: center; font-weight: bold;
-                        {% if category == 'error' %} background-color: #fee2e2; color: #ef4444; border: 1px solid #fca5a5;
-                        {% else %} background-color: #dcfce3; color: #22c55e; border: 1px solid #86efac; {% endif %}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-            <form method="POST">
-                <label>Student Email</label>
-                <input type="email" name="student_email" placeholder="Enter your email" required>
+        <header>
+            <h1>📊 Financial Records</h1>
+            <p class="subtitle">
+                Review and monitor your income and spending history
+            </p>
+        </header>
 
-                <label>Password</label>
-                <input type="password" name="password" placeholder="Enter your password" required>
+        <section class="feature-box">
+            <h3>📌 Spending Overview</h3>
+            <p>
+                Review your detailed spending history below. 
+                Total Expense: <strong style="color: #ef4444;">RM {{ "%.2f"|format(total) }}</strong> | 
+                Total Records: <strong>{{ expenses|length }}</strong>
+            </p>
+        </section>
 
-                <button type="submit">Login</button>
+        <section class="feature-box">
+            <form method="POST" action="/delete_batch">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Select</th>
+                            <th>No.</th>
+                            <th>Date</th>
+                            <th>Amount (RM)</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Type</th> </tr>
+                    </thead>
+                    <tbody>
+                        {% for expense in expenses %}
+                        <tr>
+                            <td><input type="checkbox" name="expense_ids" value="{{ expense[0] }}" style="width: 18px; height: 18px;"></td>
+                            <td>{{ loop.index }}</td>
+                            
+                            <td><span style="background: #f1f5f9; padding: 4px 8px; border-radius: 6px; font-size: 14px;">{{ expense[4] }}</span></td>
+                            
+                            <td>
+                                {% if expense[5] == 'Income' %}
+                                    <span style="color: #22c55e; font-weight: bold; background: #dcfce3; padding: 4px 8px; border-radius: 6px;">+ RM {{ "%.2f"|format(expense[1]|float) }}</span>
+                                {% else %}
+                                    <span style="color: #ef4444; font-weight: bold;">- RM {{ "%.2f"|format(expense[1]|float) }}</span>
+                                {% endif %}
+                            </td>
+                            
+                            <td>{{ expense[2] }}</td>
+                            <td>{{ expense[3] }}</td>
+                            
+                            <td>
+                                <span style="font-size: 12px; font-weight: bold; padding: 3px 6px; border-radius: 4px; {% if expense[5] == 'Income' %}background: #dcfce3; color: #16a34a;{% else %}background: #fee2e2; color: #dc2626;{% endif %}">
+                                    {{ expense[5] }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                </table>
+                
+                <button type="submit" class="secondary-btn" style="margin-top: 15px;">
+                    🗑️ Delete Selected
+                </button>
             </form>
-        </div>
+            
 
-        <div style="text-align: center; margin-top: 20px;">
-            <a href="/register" style="color: #38bdf8; text-decoration: none; font-weight: bold;">Create an Account</a>
-        </div>
+            <p style="text-align: center; margin-top: 15px; color: #475569;">
+                Overall Total: <strong>RM {{ "%.2f"|format(total) }}</strong> | Total Records: <strong>{{ expenses|length }}</strong>
+            </p>
+        </section>
+
     </div>
-</body>
 
+    <footer>
+        <p>MMU BohLui Expense Tracker System © 2026</p>
+    </footer>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
 </html>

@@ -9,6 +9,16 @@
 </head>
 
 <body>
+<<<<<<< HEAD
+   <nav>
+        <a href="/">Home</a>
+        <a href="/add">Add Expense</a>
+        <a href="/list">View Expenses</a>
+        <a href="/chart">📈 Chart</a>
+        <a href="/logout" style="color: #ef4444; font-weight: bold; margin-left: 20px;">Logout</a>
+        <button id="themeToggle" class="theme-toggle-btn">🌙 Dark Mode</button>
+    </nav>
+=======
     <nav>
         <a href="/">Home</a>
         <a href="/add">Add Expense</a>
@@ -16,6 +26,7 @@
         <a href="/chart" style="font-weight: bold; color: #38bdf8;">📈 Chart</a> <button id="themeToggle" class="theme-toggle-btn">🌙 Dark Mode</button>
     </nav>
 
+>>>>>>> 168c87b07d5ec4b57bd9c25d53067f210b2f0fb2
     <div class="container">
         <header>
             <h1>📈 Spending Analytics</h1>
@@ -104,5 +115,8 @@
             }
         });
     </script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
 </body>
 </html>

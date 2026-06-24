@@ -108,8 +108,7 @@ tr:hover { background: #fdfbfb; }
 
 /* =========================
    DARK MODE (新增的高级黑模式)
-/* 只有当加上 .dark-mode 时，这些黑色才会覆盖你的渐变色 */
-   DARK MODE
+========================= */
 body.dark-mode {
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
     color: #e2e8f0;
