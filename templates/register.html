@@ -2,39 +2,50 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Student Login - MMU BohLui</title>
+    <title>Student Register - MMU BohLui</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1 style="text-align: center;">🎓 Student Login</h1>
-        <p class="subtitle" style="text-align: center;">Welcome back to MMU BohLui</p>
+        <h1 style="text-align: center;">📝 Student Registration</h1>
+        <p class="subtitle" style="text-align: center;">Create your MMU BohLui account</p>
 
         <div class="feature-box">
             {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div style="padding: 10px; margin-bottom: 15px; border-radius: 8px; text-align: center; font-weight: bold;
-                        {% if category == 'error' %} background-color: #fee2e2; color: #ef4444; border: 1px solid #fca5a5;
-                        {% else %} background-color: #dcfce3; color: #22c55e; border: 1px solid #86efac; {% endif %}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
+  {% if messages %}
+    {% for category, message in messages %}
+      
+      {# 1. 先用一个变量把动态的颜色样式存起来 #}
+      {% if category == 'error' %}
+        {% set alert_style = "background-color: #fee2e2; color: #ef4444; border: 1px solid #fca5a5;" %}
+      {% else %}
+        {% set alert_style = "background-color: #dcfce3; color: #22c55e; border: 1px solid #86efac;" %}
+      {% endif %}
+
+      {# 2. 然后干干净净地把变量放进 div 的 style 里 #}
+      <div style="padding: 10px; margin-bottom: 15px; border-radius: 8px; text-align: center; font-weight: bold; {{ alert_style }}">
+          {{ message }}
+      </div>
+
+    {% endfor %}
+  {% endif %}
+{% endwith %}
             <form method="POST">
+                <label>Student Name</label>
+                <input type="text" name="student_name" placeholder="E.g. Chan Yee Seng" required>
+
                 <label>Student Email</label>
-                <input type="email" name="student_email" placeholder="Enter your email" required>
+                <input type="email" name="student_email" placeholder="E.g. student@mmu.edu.my" required>
 
                 <label>Password</label>
-                <input type="password" name="password" placeholder="Enter your password" required>
+                <input type="password" name="password" placeholder="Create a secure password" required>
 
-                <button type="submit">Login</button>
+                <button type="submit">Register</button>
             </form>
         </div>
 
         <div style="text-align: center; margin-top: 20px;">
-            <a href="/register" style="color: #38bdf8; text-decoration: none; font-weight: bold;">Create an Account</a>
+            <a href="/login" style="color: #38bdf8; text-decoration: none; font-weight: bold;">← Back To Login</a>
         </div>
     </div>
 </body>
