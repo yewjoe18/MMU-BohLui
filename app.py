@@ -1,3 +1,5 @@
+app.secret_key = "bohlui_secret_key_prod_2026" # 可以换一个复杂的字符串，保证线上 Session 安全
+
 from datetime import date, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import Flask, render_template, request, redirect, url_for, session, flash
@@ -222,3 +224,5 @@ def delete_batch():
 
 if __name__ == '__main__':
     app.run(debug=True)
+    Flask==3.0.3
+Werkzeug==3.0.3
